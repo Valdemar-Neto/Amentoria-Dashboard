@@ -23,15 +23,15 @@ export class Student extends Entity<StudentProps>{
 
         //Email's Validation
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if(!emailRegex.test(props.email)){
-            throw new Error("O email fornecido é inválido");
+            throw new Error("O email fornecido é inválido.");
         }
 
         // Password's Validation
 
         if(props.password.length<6){
-            throw new Error("A senha deve ter pelo menos 6 caracteres");
+            throw new Error("A senha deve ter pelo menos 6 caracteres.");
         }
 
         const student = new Student({...props, createdAt: new Date(),}, id);
