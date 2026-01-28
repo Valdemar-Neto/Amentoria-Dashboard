@@ -7,7 +7,7 @@ export interface DashboardFilters {
     endDate?: Date;
     subject?: string; // select/dropdown
     searchQuery?: string; // busca livre
-    categories?: string; // filtro checkbox
+    categories?: string[]; // filtro checkbox
 }
 
 export interface IDashboardRepository {
