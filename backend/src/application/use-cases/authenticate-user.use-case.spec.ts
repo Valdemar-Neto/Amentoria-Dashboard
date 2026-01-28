@@ -1,10 +1,11 @@
 import { AuthenticateUserUseCase } from './authenticate-user.use-case';
 import { IStudentsRepository } from '../../domain/repositories/students-repository';
 import { Student } from '../../domain/entities/student.entity';
-import { Encrypter } from '../gateways/encrypter.gateway';
+import { IHasher } from '../../domain/gateway/cryptography/hasher';
+import { IEncrypter } from '../../domain/gateway/cryptography/encrypter';
 import { UnauthorizedException } from '@nestjs/common';
 
-// Mocks (Você pode copiar do teste anterior ou criar um arquivo de mocks compartilhado)
+// 1. Mock do Repositório
 class InMemoryStudentsRepository implements IStudentsRepository {
   public items: Student[] = [];
   async create(student: Student): Promise<void> { this.items.push(student); }
@@ -12,33 +13,46 @@ class InMemoryStudentsRepository implements IStudentsRepository {
     return this.items.find(item => item.email === email) || null; 
   }
   async findById(id: string): Promise<Student | null> { return null; }
-  async count(): Promise<number> {return this.items.length}
+  async count(): Promise<number> { return this.items.length; }
 }
-class FakeEncrypter implements Encrypter {
-  async encrypt(plainText: string): Promise<string> { return plainText + '-hashed'; }
-  // Simula a comparação real: verifica se o hash termina com o sufixo que a gente inventou
-  async compare(plainText: string, hashedText: string): Promise<boolean> {
-    return plainText + '-hashed' === hashedText;
+
+// 2. Mock do Hasher (Para Senhas)
+class FakeHasher implements IHasher {
+  async hash(plain: string): Promise<string> { return plain + '-hashed'; }
+  async compare(plain: string, hashed: string): Promise<boolean> {
+    return plain + '-hashed' === hashed;
   }
 }
 
-describe('Authenticate User Use Case', () => {
+// 3. Mock do Encrypter (Para JWT)
+class FakeEncrypter implements IEncrypter {
+  // Agora aceita Objeto (payload), conforme a interface nova
+  async encrypt(payload: Record<string, unknown>): Promise<string> { 
+    return JSON.stringify(payload) + '-fake-token'; 
+  }
+}
+
+describe('Authenticate Student Use Case', () => {
   let studentsRepository: InMemoryStudentsRepository;
+  let hasher: FakeHasher;
   let encrypter: FakeEncrypter;
   let sut: AuthenticateUserUseCase;
 
   beforeEach(() => {
     studentsRepository = new InMemoryStudentsRepository();
+    hasher = new FakeHasher();
     encrypter = new FakeEncrypter();
-    sut = new AuthenticateUserUseCase(studentsRepository, encrypter);
+    
+    // Agora injetamos as 3 dependências
+    sut = new AuthenticateUserUseCase(studentsRepository, hasher, encrypter);
   });
 
   it('should be able to authenticate with correct credentials', async () => {
-    // 1. Criar um usuário no "banco"
+    // 1. Criar aluno com senha hashada (usando o FakeHasher)
     const student = Student.create({
       name: 'Aluno Teste',
       email: 'aluno@teste.com',
-      password: await encrypter.encrypt('123456'), // Senha já criptografada
+      password: await hasher.hash('123456'), 
     });
     await studentsRepository.create(student);
 
@@ -48,21 +62,24 @@ describe('Authenticate User Use Case', () => {
       password: '123456',
     });
 
+    // 3. Validar retorno (Agora tem AccessToken)
     expect(result.id).toEqual(student.id);
+    expect(result.accessToken).toBeDefined();
+    expect(result.accessToken).toContain('-fake-token'); // Confirma que usou o FakeEncrypter
   });
 
   it('should NOT be able to authenticate with wrong password', async () => {
     const student = Student.create({
       name: 'Aluno Teste',
       email: 'aluno@teste.com',
-      password: await encrypter.encrypt('123456'),
+      password: await hasher.hash('123456'),
     });
     await studentsRepository.create(student);
 
     await expect(
       sut.execute({
         email: 'aluno@teste.com',
-        password: 'senha-errada',
+        password: 'senha-errada', // Senha não bate com o hash
       }),
     ).rejects.toBeInstanceOf(UnauthorizedException);
   });

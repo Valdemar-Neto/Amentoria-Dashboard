@@ -1,6 +1,7 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { IStudentsRepository } from '../../domain/repositories/students-repository';
-import { Encrypter } from '../gateways/encrypter.gateway';
+import { IEncrypter } from '../../domain/gateway/cryptography/encrypter';
+import { IHasher } from '../../domain/gateway/cryptography/hasher';
 import { AuthenticateUserInput, AuthenticateUserOutput } from '../dtos/authenticate-user-dto';
 
 
@@ -9,8 +10,10 @@ export class AuthenticateUserUseCase {
   constructor(
     @Inject('IStudentsRepository')
     private readonly studentsRepository: IStudentsRepository,
-    @Inject('Encrypter')
-    private readonly encrypter: Encrypter,
+    @Inject('IHasher')
+    private readonly hasher: IHasher,
+    @Inject('IEncrypter')
+    private readonly encrypter: IEncrypter,
   ) {}
 
   async execute(input: AuthenticateUserInput): Promise<AuthenticateUserOutput> {
@@ -18,11 +21,11 @@ export class AuthenticateUserUseCase {
 
     if (!student) {
       // Por segurança, usamos mensagem genérica para não revelar que o email existe
-      throw new UnauthorizedException('Credenciais inválidas.');
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     //Validar senha (usando a porta do Encrypter)
-    const isPasswordValid = await this.encrypter.compare(
+    const isPasswordValid = await this.hasher.compare(
       input.password,
       student.password,
     );
@@ -31,11 +34,16 @@ export class AuthenticateUserUseCase {
       throw new UnauthorizedException('Credenciais inválidas.');
     }
 
+    const token = await this.encrypter.encrypt({
+        sub: student.id,
+    });
+
     //Retornar dados do usuário
     return {
       id: student.id,
       name: student.name,
       email: student.email,
+      accessToken: token, 
     };
   }
 }
