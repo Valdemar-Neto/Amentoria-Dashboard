@@ -1,10 +1,10 @@
-import { StudySession } from "src/domain/entities/study-session.entity";
+import { StudySession } from "../../../../domain/entities/study-session.entity";
 import { StudySession as PrismaSession } from "@prisma/client";
 
 // Faz a conversao dos dados de estudos quando receber o arquivo json
 
 type SessionCategory = 'AULA'|'EXERCICIO'|'REVISAO';
-export class StudySessionMapper{
+export class PrismaStudySessionMapper{
     static toDomain(raw: PrismaSession): StudySession{
 
         let validCategory: SessionCategory = 'AULA';
