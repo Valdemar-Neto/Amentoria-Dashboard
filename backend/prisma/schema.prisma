@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Mapeamento da Entidade Student
+model Student {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  // Relacionamentos
+  scores    SimulationScore[]
+  sessions  StudySession[]
+
+  @@map("students") // Nome da tabela no banco (snake_case é boa prática em SQL)
+}
+
+// Mapeamento da Entidade SimulationScore 
+model SimulationScore {
+  id        String   @id @default(uuid())
+  score     Int
+  subject   String
+  date      DateTime
+
+  // Chave Estrangeira
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@map("simulation_scores")
+}
+
+// Mapeamento da Entidade StudySession
+model StudySession {
+  id        String   @id @default(uuid())
+  minutes   Int
+  subject   String   // Adicionamos ontem na refatoração Senior!
+  category  String   // ENUM (AULA, EXERCICIO) salvo como String
+  date      DateTime
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@map("study_sessions")
+}

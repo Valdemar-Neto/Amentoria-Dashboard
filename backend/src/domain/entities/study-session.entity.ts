@@ -30,8 +30,9 @@ export class StudySession extends Entity<StudySessionProps> {
     return new StudySession(props, id);
   }
 
+  get studentId() { return this.props.studentId; }
   get minutes() { return this.props.minutes; }
   get category() { return this.props.category; }
-  get subject() { return this.props.subject; } // <--- Getter novo
+  get subject() { return this.props.subject; }
   get date() { return this.props.date; }
 }
