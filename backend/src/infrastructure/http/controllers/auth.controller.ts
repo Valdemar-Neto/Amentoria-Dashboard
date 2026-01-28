@@ -1,14 +1,16 @@
-import { Body, Controller, Post, HttpCode, UnauthorizedException, ConflictException } from "@nestjs/common";
+import { Body, Controller, Post, HttpCode, UnauthorizedException, ConflictException, Get, Query } from "@nestjs/common";
 import { RegisterStudentUseCase } from "../../../application/use-cases/register-student.use-case";
 import { AuthenticateUserUseCase } from "../../../application/use-cases/authenticate-user.use-case";
 import { CreateAccountDto } from "../dtos/create-account.dto";
 import { AuthenticateDto } from "../dtos/authenticate-account.dto";
+import { GetStudentProfileUseCase } from "../../../application/use-cases/get-student-profile.use-case";
 
 @Controller('auth')
 export class AuthController{
     constructor(
         private readonly registerStudent: RegisterStudentUseCase,
         private readonly authenticateStudent: AuthenticateUserUseCase,
+        private readonly getStudentProfile: GetStudentProfileUseCase,
     ){}
 
     @Post('signup')
@@ -55,4 +57,10 @@ export class AuthController{
             throw new UnauthorizedException('Invalid credentials');
         }
   }
+
+    @Get('me')
+    async getMe(@Query('id') id: string) {
+        return await this.getStudentProfile.execute(id);
+    }
+
 }

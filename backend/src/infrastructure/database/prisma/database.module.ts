@@ -19,7 +19,7 @@ import { PrismaDashboardRepository } from "./repositories/prisma-dashboard-repos
         {
             provide: 'IDashboardRepository',
             useClass: PrismaDashboardRepository,
-        }
+        },
     ],
 
     exports: [

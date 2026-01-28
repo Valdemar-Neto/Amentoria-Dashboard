@@ -65,4 +65,27 @@ export class PrismaDashboardRepository implements IDashboardRepository {
 
     return rawSessions.map(PrismaStudySessionMapper.toDomain);
   }
+
+  async createScore(score: SimulationScore): Promise<void> {
+    const data = PrismaSimulationScoreMapper.toPrisma(score);
+    await this.prisma.simulationScore.create({ data });
+  }
+
+  async createSession(session: StudySession): Promise<void> {
+    const data = PrismaStudySessionMapper.toPrisma(session);
+    await this.prisma.studySession.create({ data });
+  }
+
+  async deleteSession(id: string): Promise<void> {
+    await this.prisma.studySession.delete({ where: { id } });
+  }
+
+  async findUniqueSubjects(studentId: string): Promise<string[]> {
+    const sessions = await this.prisma.studySession.findMany({
+      where: { studentId },
+      distinct: ['subject'],
+      select: { subject: true }
+    });
+    return sessions.map(s => s.subject);
+  }
 }

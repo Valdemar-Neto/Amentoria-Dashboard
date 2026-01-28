@@ -19,7 +19,7 @@ model Student {
   scores    SimulationScore[]
   sessions  StudySession[]
 
-  @@map("students") // Nome da tabela no banco (snake_case é boa prática em SQL)
+  @@map("students") 
 }
 
 // Mapeamento da Entidade SimulationScore 
@@ -40,8 +40,8 @@ model SimulationScore {
 model StudySession {
   id        String   @id @default(uuid())
   minutes   Int
-  subject   String   // Adicionamos ontem na refatoração Senior!
-  category  String   // ENUM (AULA, EXERCICIO) salvo como String
+  subject   String   
+  category  String   
   date      DateTime
 
   studentId String

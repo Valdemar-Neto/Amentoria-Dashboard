@@ -10,10 +10,16 @@ export interface DashboardFilters {
     categories?: string[]; // filtro checkbox
 }
 
-export interface IDashboardRepository {
+export abstract class IDashboardRepository {
   // Retorna os dados crus para calcularmos as métricas
-    findScores(filters: DashboardFilters): Promise<SimulationScore[]>;
-    findSessions(filters: DashboardFilters): Promise<StudySession[]>;
+    abstract findScores(filters: DashboardFilters): Promise<SimulationScore[]>;
+    abstract findSessions(filters: DashboardFilters): Promise<StudySession[]>;
   
   // Poderíamos ter métodos que já retornam agregado, mas vamos começar simples
+
+   abstract createScore(score: SimulationScore): Promise<void>;
+   abstract createSession(session: StudySession): Promise<void>;
+
+   abstract deleteSession(id: string): Promise<void>;
+   abstract findUniqueSubjects(studentId: string): Promise<string[]>;
 }
