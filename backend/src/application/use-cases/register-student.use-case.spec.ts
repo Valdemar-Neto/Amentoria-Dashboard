@@ -20,6 +20,10 @@ class InMemoryStudentsRepository implements IStudentsRepository {
     const student = this.items.find(item => item.id === id);
     return student || null;
   }
+
+  async count(): Promise<number>{
+    return this.items.length;
+  }
 }
 
 class FakeEncrypter implements Encrypter{

@@ -12,8 +12,8 @@ class InMemoryStudentsRepository implements IStudentsRepository {
     return this.items.find(item => item.email === email) || null; 
   }
   async findById(id: string): Promise<Student | null> { return null; }
+  async count(): Promise<number> {return this.items.length}
 }
-
 class FakeEncrypter implements Encrypter {
   async encrypt(plainText: string): Promise<string> { return plainText + '-hashed'; }
   // Simula a comparação real: verifica se o hash termina com o sufixo que a gente inventou
