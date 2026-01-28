@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Student } from '../../domain/entities/student.entity';
-import {IStudentsRepository} from '../../domain/repositories/students-repository';
+import { IStudentsRepository} from '../../domain/repositories/students-repository';
 import { RegisterStudentInput, RegisterStudentOutput } from "../dtos/register-student-dto";
-import { Encrypter } from "../gateways/encrypter.gateway";
+import { IHasher } from "../../domain/gateway/cryptography/hasher";
 //Permitindo que o Nest injete dependencias
 
 @Injectable()
@@ -11,8 +11,8 @@ export class RegisterStudentUseCase{
         @Inject('IStudentsRepository')
         private readonly studensRepository: IStudentsRepository,
 
-        @Inject('Encrypter')
-        private readonly encrypter: Encrypter,
+        @Inject('IHasher')
+        private readonly hasher: IHasher,
     ){}
 
 
@@ -23,7 +23,7 @@ export class RegisterStudentUseCase{
             throw new Error("Este e-mail já está em uso.");
         }
 
-        const hashedPassword = await this.encrypter.encrypt(input.password);
+        const hashedPassword = await this.hasher.hash(input.password);
 
         const student = Student.create({
             name: input.name,
