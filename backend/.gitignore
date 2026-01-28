@@ -3,6 +3,7 @@
 /node_modules
 /build
 /src/test-db.ts
+/src/test-dashboard.ts
 
 # Logs
 logs
