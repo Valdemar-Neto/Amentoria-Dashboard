@@ -8,7 +8,6 @@ export class GetDashboardStatsUseCase {
   constructor(
     @Inject('IDashboardRepository')
     private readonly dashboardRepository: IDashboardRepository,
-    // Precisamos do repositório de alunos para contar o total
     @Inject('IStudentsRepository')
     private readonly studentsRepository: IStudentsRepository, 
   ) {}
@@ -28,7 +27,6 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
     const totalHours = Math.round(totalMinutes / 60);
 
     // Mapa de Tempo por Matéria
-    // Vamos somar quantos minutos foram gastos em cada matéria
     const timePerSubject = new Map<string, number>();
 
     sessions.forEach(session => {
@@ -42,8 +40,6 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
     // Matéria mais popular é a que teve mais tempo de estudo
     const mostPopularSubject = sortedByTime.length > 0 ? sortedByTime[0][0] : 'N/A';
 
-    // --- MONTAGEM DOS GRÁFICOS ---
-
     // Gráfico de Barras: Ranking de Matérias (Top 5 por dedicação)
     const subjectsRanking = sortedByTime.slice(0, 5).map(([subject, minutes]) => ({
         subject,
@@ -51,12 +47,11 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
     }));
 
     // Gráfico de Pizza: Distribuição de Estudo (Top 4 + Outros)
-    // Se tiver muitas matérias, o gráfico de pizza fica feio. Vamos pegar o Top 4 e somar o resto em "Outros".
     const topSubjects = sortedByTime.slice(0, 4);
     const otherSubjects = sortedByTime.slice(4);
     
     const studyDistribution = topSubjects.map(([subject, minutes]) => ({
-        category: subject, // Reutilizando a prop 'category' do DTO para o nome da fatia
+        category: subject, 
         hours: Math.round(minutes / 60)
     }));
 
@@ -68,7 +63,7 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
         });
     }
 
-    // Gráfico de Linha: Evolução das Notas (Mantém lógica anterior)
+    // Gráfico de Linha: Evolução das Notas
     const scoresByDate = new Map<string, { total: number, count: number }>();
     scores.forEach(s => {
         const dateStr = s.date instanceof Date ? s.date.toISOString().split('T')[0] : new Date(s.date).toISOString().split('T')[0];
@@ -91,7 +86,7 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
       charts: {
         scoresEvolution,
         subjectsRanking,
-        studyDistribution, // Agora está preenchido!
+        studyDistribution, 
       }
     };
   }

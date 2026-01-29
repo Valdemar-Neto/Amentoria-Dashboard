@@ -13,6 +13,8 @@ import { RegisterSimulationScoreUseCase } from "../../application/use-cases/regi
 import { GetStudentProfileUseCase } from "../../application/use-cases/get-student-profile.use-case";
 import { GetStudentSessionsUseCase } from "../../application/use-cases/get-student-sessions.use-case";
 import { DeleteStudySessionUseCase } from "../../application/use-cases/delete-study-session.use-case";
+import { ChangePasswordUseCase } from "src/application/use-cases/change-password.use-case";
+import { UpdateSimulationScoreUseCase } from "src/application/use-cases/update-simulation-score.use-case";
 @Module({
     imports: [DatabaseModule, JwtModule.register({global: true, secret: 'secret-key-123', signOptions:{ expiresIn: '1d'}})],
     controllers:[AuthController,DashboardController],
@@ -68,6 +70,16 @@ import { DeleteStudySessionUseCase } from "../../application/use-cases/delete-st
             useFactory: (repo) => new DeleteStudySessionUseCase(repo),
             inject: ['IDashboardRepository'],
         },
+        {
+            provide: ChangePasswordUseCase,
+            useFactory: (repo, hasher) => new ChangePasswordUseCase(repo, hasher),
+            inject: ['IStudentsRepository', BcryptHasher],
+        },
+        {
+            provide: UpdateSimulationScoreUseCase,
+            useFactory: (repo) => new UpdateSimulationScoreUseCase(repo),
+            inject: ['IDashboardRepository']
+        }
     ]
 })
 

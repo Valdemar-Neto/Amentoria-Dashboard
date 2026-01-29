@@ -20,11 +20,10 @@ export class AuthenticateUserUseCase {
     const student = await this.studentsRepository.findByEmail(input.email);
 
     if (!student) {
-      // Por segurança, usamos mensagem genérica para não revelar que o email existe
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    //Validar senha (usando a porta do Encrypter)
+    //Validar senha
     const isPasswordValid = await this.hasher.compare(
       input.password,
       student.password,
