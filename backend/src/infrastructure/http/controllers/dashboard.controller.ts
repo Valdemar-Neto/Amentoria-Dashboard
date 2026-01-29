@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, Body, Param, Delete, Inject, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, Param, Delete, Inject, UseGuards, Req, Put } from '@nestjs/common';
 import { GetDashboardStatsUseCase } from '../../../application/use-cases/get-dashboard-stats.use-case';
 import { RegisterStudySessionUseCase } from '../../../application/use-cases/register-study-session.use-case';
 import { RegisterSimulationScoreUseCase } from '../../../application/use-cases/register-simulation-score.use-case';
@@ -16,6 +16,8 @@ import {
 } from '@nestjs/swagger';
 import { CreateSessionDto } from '../dtos/create-session.dto';
 import { CreateScoreDto } from '../dtos/create-score.dto';
+import { UpdateSimulationScoreUseCase } from 'src/application/use-cases/update-simulation-score.use-case';
+import { UpdateScoreDto } from '../dtos/update-score.dto';
 
 @ApiTags('Dashboard') // Agrupa as rotas no Swagger UI
 @ApiBearerAuth()      // Ativa a autenticação JWT no Swagger
@@ -28,6 +30,7 @@ export class DashboardController {
     private readonly registerScore: RegisterSimulationScoreUseCase,
     private readonly getStudentSessions: GetStudentSessionsUseCase,
     private readonly deleteStudySession: DeleteStudySessionUseCase,
+    private readonly updateSimulationScore: UpdateSimulationScoreUseCase,
 
     @Inject('IDashboardRepository')
     private readonly dashboardRepository: IDashboardRepository,
@@ -99,5 +102,18 @@ export class DashboardController {
   async delete(@Param('id') id: string) {
     await this.deleteStudySession.execute(id);
     return { message: 'Removido com sucesso' };
+  }
+
+  @Put('scores/:id')
+  @ApiOperation({summary:'Atualizar um registro de nota de simulado'})
+  @ApiParam({name:'id', description:'ID da nota a ser editada'})
+  async updateScore(@Req() request:any,@Param('id') id: string, @Body() body: UpdateScoreDto){
+    await this.updateSimulationScore.execute({
+      id,
+      studentId: request.user.sub,
+      ...body,
+    })
+
+    return {message: 'Nota atualizad com sucesso'}
   }
 }
