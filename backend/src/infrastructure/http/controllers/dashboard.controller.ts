@@ -14,6 +14,8 @@ import {
   ApiResponse, 
   ApiParam
 } from '@nestjs/swagger';
+import { CreateSessionDto } from '../dtos/create-session.dto';
+import { CreateScoreDto } from '../dtos/create-score.dto';
 
 @ApiTags('Dashboard') // Agrupa as rotas no Swagger UI
 @ApiBearerAuth()      // Ativa a autenticação JWT no Swagger
@@ -59,7 +61,7 @@ export class DashboardController {
   @Post('sessions')
   @ApiOperation({ summary: 'Registrar uma nova sessão de estudo' })
   @ApiResponse({ status: 201, description: 'Sessão registrada com sucesso.' })
-  async createSession(@Req() request: any, @Body() body: any) {
+  async createSession(@Req() request: any, @Body() body: CreateSessionDto) {
     await this.registerSession.execute({
       ...body,
       studentId: request.user.sub,
@@ -69,7 +71,7 @@ export class DashboardController {
 
   @Post('scores')
   @ApiOperation({ summary: 'Registrar a nota de um simulado' })
-  async createScore(@Req() request: any, @Body() body: any) {
+  async createScore(@Req() request: any, @Body() body: CreateScoreDto) {
     await this.registerScore.execute({
       ...body,
       studentId: request.user.sub,

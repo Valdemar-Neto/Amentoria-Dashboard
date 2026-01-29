@@ -88,4 +88,15 @@ export class PrismaDashboardRepository implements IDashboardRepository {
     });
     return sessions.map(s => s.subject);
   }
+
+  async updateScore(id: string, data: { score?: number; subject?: string; }): Promise<void> {
+      await this.prisma.simulationScore.update({
+        where: {id},
+        data,
+      });
+  }
+
+  async findScoreById(id: string): Promise<any> {
+      return await this.prisma.simulationScore.findUnique({where:{id}});
+  }
 }
