@@ -41,4 +41,11 @@ export class PrismaStudentRepository implements IStudentsRepository{
         return this.prisma.student.count();
     }
 
+    async updatePassword(id: string, passwordHash: string): Promise<void> {
+        await this.prisma.student.update({
+            where: {id}, 
+            data: {password: passwordHash}
+        })
+    }
+
 }
