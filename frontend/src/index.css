@@ -1,8 +1,57 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body {
-  @apply bg-background text-text-primary antialiased;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+@theme {
+  /* --- PALETA AMENTORIA (Baseada na Imagem) --- */
+  
+  /* Roxo Principal (Botões e Destaques) */
+  --color-brand-50: #f3e8ff;
+  --color-brand-100: #e9d5ff;
+  --color-brand-200: #d8b4fe;
+  --color-brand-300: #c084fc;
+  --color-brand-400: #a855f7;
+  --color-brand-500: #8b25ca; /* Roxo vibrante */
+  --color-brand-600: #7c3aed; /* Cor base dos botões */
+  --color-brand-700: #6d28d9;
+  --color-brand-800: #5b21b6;
+  --color-brand-900: #4c1d95;
+
+  /* Ciano Neon (O "Verde" da imagem - Logo e Texto de Destaque) */
+  --color-accent: #06b6d4;      /* Ciano base */
+  --color-accent-light: #67e8f9; /* Brilho neon */
+  --color-accent-dark: #155e75;
+
+  /* Cores de Fundo (Dark Mode Inspired) */
+  --color-background: #0f172a; /* Azul muito escuro (quase preto) */
+  --color-surface: #1e293b;    /* Cinza azulado escuro para cards */
+  
+  /* Textos */
+  --color-text-primary: #f8fafc;   /* Branco gelo (para fundo escuro) */
+  --color-text-secondary: #94a3b8; /* Cinza claro */
+  --color-text-inverse: #0f172a;   /* Preto (para usar dentro de botões claros) */
+
+  /* Cores de Estado */
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+
+  /* Sombras */
+  --shadow-glow: 0 0 20px -5px rgba(124, 58, 237, 0.5); /* Brilho roxo */
+  --shadow-neon: 0 0 15px -3px rgba(6, 182, 212, 0.6);  /* Brilho ciano */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Utilitários para Glassmorphism Escuro */
+.glass-dark {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }

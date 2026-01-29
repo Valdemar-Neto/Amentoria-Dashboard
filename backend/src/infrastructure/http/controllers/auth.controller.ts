@@ -29,8 +29,9 @@ export class AuthController {
       const output = await this.registerStudent.execute(body);
       return { message: 'Student created successfully', id: output.id };
     } catch (error: any) {
-      if (error.message === 'Student already exists.') {
-        throw new ConflictException(error.message);
+      console.log("❌ Erro no Use Case:", error.message);
+      if (error.message === 'Este e-mail já está em uso.') {
+        throw new ConflictException('Este e-mail já está cadastrado.');
       }
       throw error;
     }
