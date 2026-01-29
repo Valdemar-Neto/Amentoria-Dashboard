@@ -1,4 +1,4 @@
-import { Body, Controller, Post, HttpCode, UnauthorizedException, ConflictException, Get, Req} from "@nestjs/common";
+import { Body, Controller, Post, HttpCode, UnauthorizedException, ConflictException, Get, Req, Put} from "@nestjs/common";
 import { RegisterStudentUseCase } from "../../../application/use-cases/register-student.use-case";
 import { AuthenticateUserUseCase } from "../../../application/use-cases/authenticate-user.use-case";
 import { CreateAccountDto } from "../dtos/create-account.dto";
@@ -7,6 +7,8 @@ import { GetStudentProfileUseCase } from "../../../application/use-cases/get-stu
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from "@nestjs/swagger";
 import { AuthGuard } from "../guards/auth.guard";
 import { UseGuards } from "@nestjs/common";
+import { ChangePasswordUseCase } from "src/application/use-cases/change-password.use-case";
+import { ChangePasswordDto } from "../dtos/change-password.dto";
 
 
 @ApiTags('Authentication') // Mudamos para separar do Dashboard no Swagger
@@ -16,6 +18,7 @@ export class AuthController {
     private readonly registerStudent: RegisterStudentUseCase,
     private readonly authenticateStudent: AuthenticateUserUseCase,
     private readonly getStudentProfile: GetStudentProfileUseCase,
+    private readonly putPassword: ChangePasswordUseCase,
   ) {}
 
   @Post('signup')
@@ -57,4 +60,20 @@ export class AuthController {
     const studentId = request.user.sub;
     return await this.getStudentProfile.execute(studentId);
   }
+
+  @Put('change-password')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({summary: 'Alterar senha do aluno'})
+  async changePassword(@Req() request: any, @Body() body: ChangePasswordDto){
+    await this.putPassword.execute({
+      studentId: request.user.sub,
+      oldPassword: body.oldPassword,
+      newPassword: body.newPassword,
+    });
+
+    return{ message: 'Senha alterada com sucesso'};
+  }
+
+
 }
