@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, Calendar, Settings, LogOut, User, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Calendar, Settings, LogOut, User, Sun, Moon, GraduationCap } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -31,6 +31,7 @@ export function Sidebar() {
 
         <NavItem to="/dashboard" icon={LayoutDashboard} label="Dashboard" />
         <NavItem to="/simulados" icon={BookOpen} label="Simulados" />
+        <NavItem to="/materiais" icon={GraduationCap} label="Materiais" />
         <NavItem to="/cronograma" icon={Calendar} label="Cronograma" />
         <NavItem to="/configuracoes" icon={Settings} label="Configurações" />
       </nav>

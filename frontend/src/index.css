@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* 1. CAMADA BASE */
+
 @layer base {
   :root {
     /* --- MODO ESCURO (Padrão) --- */

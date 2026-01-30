@@ -13,16 +13,19 @@ export function CategoryChart({ data }: CategoryChartProps) {
   const categories = data?.map(d => d.category) || ['AULA', 'EXERCICIO', 'REVISAO'];
   const values = data?.map(d => d.hours) || [0, 0, 0];
 
+  const textColor = isDark ? '#94a3b8' : '#64748b';
+  
   const options: Highcharts.Options = {
     chart: { type: 'column', backgroundColor: 'transparent', height: 300 },
     title: { text: undefined },
     xAxis: {
       categories: categories,
-      labels: { style: { color: isDark ? '#94a3b8' : '#64748b' } }
+      labels: { style: { color: textColor } }
     },
     yAxis: {
       title: { text: 'Horas' },
-      gridLineColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'
+      gridLineColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+      labels: { style: { color: textColor } }
     },
     plotOptions: {
       column: { borderRadius: 8, colorByPoint: true }

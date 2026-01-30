@@ -7,14 +7,15 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { Toaster } from 'sonner';
+import { Simulados } from './pages/Simulados';
+import { Cronograma } from './pages/Cronogra';
+import { Materiais } from './pages/Materiais';
 
 export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <ThemeProvider>
-
-
           <Toaster position="top-right" richColors theme="dark" 
             toastOptions={{
               style:{
@@ -38,6 +39,9 @@ export function App() {
               </ProtectedRoute>
             }>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/simulados" element={<Simulados/>} />
+              <Route path="/cronograma" element={<Cronograma/>} />
+              <Route path='/materiais' element={<Materiais/>} />
             </Route>
 
             {/* Fallback */}
