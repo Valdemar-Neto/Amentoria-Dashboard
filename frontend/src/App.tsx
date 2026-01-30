@@ -1,18 +1,29 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { DefaultLayout } from './layouts/DefaultLayout'; // Certifique-se de criar este arquivo!
-
+import { DefaultLayout } from './layouts/DefaultLayout'; 
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
+import { Toaster } from 'sonner';
 
 export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <Toaster position="top-right" richColors theme="dark" 
+          toastOptions={{
+            style:{
+              background:'rgba(15, 23, 42, 0.9)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(10px)',
+              color: 'white'
+            },
+
+            className:'glass-pannel'
+          }}/>
         <Routes>
-          {/* Rotas Públicas */}
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           
@@ -22,9 +33,7 @@ export function App() {
               <DefaultLayout />
             </ProtectedRoute>
           }>
-            {/* Todas as rotas aqui dentro herdarão a Sidebar automaticamente */}
             <Route path="/dashboard" element={<Dashboard />} />
-            {/* Futuras rotas: <Route path="/perfil" element={<Profile />} /> */}
           </Route>
 
           {/* Fallback */}

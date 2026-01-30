@@ -19,6 +19,7 @@
     "react-router-dom": "^7.13.0",
     "recharts": "^3.7.0",
     "root": "git+https://github.com/tanstack/react-query.git",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

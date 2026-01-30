@@ -144,6 +144,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { api } from '../services/api';
 import { Mail, Lock, User, Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
+import { toast } from 'sonner';
 
 export function Register() {
   const [name, setName] = useState('');
@@ -156,15 +157,23 @@ export function Register() {
 
   async function handleRegister() {
     if (!name || !email || !password) {
-      alert("Por favor, preencha todos os campos.");
+      toast.warning('Preencha todos os campos para continuar.');
       return;
+    }
+
+
+    if(password.length<6){
+        toast.info('A senha precisa ter pelo menos 6 caracteres.');
     }
 
     setIsLoading(true);
 
+    const toastId = toast.loading('Criando sua conta...');
+
     try {
       // 1. Registro
       await api.post('/auth/signup', { name, email, password });
+      toast.success('Conta criada com sucesso!', { id: toastId })
       
       // 2. Pequeno delay para garantir consistência do banco
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -177,12 +186,12 @@ export function Register() {
       navigate('/dashboard');
 
     } catch (err: any) {
-      console.error(err);
+      toast.dismiss(toastId);
       if (err.response?.status === 409) {
-        alert("Este e-mail já possui cadastro. Tente fazer login.");
+        toast.error('Este e-mail já está em uso', {description: 'Tente fazer login ou recuperar a senha.'}),
         navigate('/login');
       } else {
-        alert(err.response?.data?.message || "Erro ao criar conta.");
+        toast.error('Erro ao criar conta.', {description:err.response?.data?.message || 'Tente novamente mais tarde.', })
       }
     } finally {
       setIsLoading(false);
