@@ -55,3 +55,12 @@
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* Novo Glassmorphism Super Premium */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6); /* Fundo escuro semi-transparente */
+  backdrop-filter: blur(20px);       /* O desfoque "fosco" */
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Borda sutil */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* Sombra profunda para "flutuar" */
+}
