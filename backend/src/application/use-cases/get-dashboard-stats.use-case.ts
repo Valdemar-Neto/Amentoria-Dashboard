@@ -76,6 +76,45 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
         score: Math.round(data.total / data.count)
     })).sort((a, b) => a.date.localeCompare(b.date));
 
+    
+    // Grafico de barras por categoria de estudo
+    const timePerCategory = new Map<string, number>();
+
+    sessions.forEach(session => {
+        // Se no seu banco o campo for 'category' (ex: 'AULA', 'EXERCICIO')
+        const category = session.category || 'OUTROS';
+        const currentMinutes = timePerCategory.get(category) || 0;
+        timePerCategory.set(category, currentMinutes + session.minutes);
+    });
+
+    // 2. Transformar o Map em um Array formatado para o Highcharts
+    const categoryDistribution = [...timePerCategory.entries()].map(([category, minutes]) => ({
+        category,
+        hours: Math.round(minutes / 60)
+    }));
+
+    const subjectScoresMap = new Map<string, Map<string, { total: number, count: number }>>();
+
+    scores.forEach(s => {
+      const dateStr = s.date instanceof Date ? s.date.toISOString().split('T')[0] : new Date(s.date).toISOString().split('T')[0];
+      const subject = s.subject || 'Geral';
+
+      if (!subjectScoresMap.has(subject)) {
+          subjectScoresMap.set(subject, new Map());
+      }
+
+      const dayMap = subjectScoresMap.get(subject)!;
+      const current = dayMap.get(dateStr) || { total: 0, count: 0 };
+      dayMap.set(dateStr, { total: current.total + s.score, count: current.count + 1 });
+    });
+
+    const subjectScoresEvolution = [...subjectScoresMap.entries()].map(([subject, dayMap]) => ({
+        subject,
+        data: [...dayMap.entries()]
+            .map(([date, data]) => ({ date, score: Math.round(data.total / data.count) }))
+            .sort((a, b) => a.date.localeCompare(b.date))
+    }));
+
     return {
       cards: {
         totalStudents,
@@ -85,8 +124,10 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
       },
       charts: {
         scoresEvolution,
+        subjectScoresEvolution,
         subjectsRanking,
         studyDistribution, 
+        categoryDistribution,
       }
     };
   }
