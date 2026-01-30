@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { DefaultLayout } from './layouts/DefaultLayout'; 
 import { Login } from './pages/Login';
@@ -11,34 +12,38 @@ export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Toaster position="top-right" richColors theme="dark" 
-          toastOptions={{
-            style:{
-              background:'rgba(15, 23, 42, 0.9)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(10px)',
-              color: 'white'
-            },
+        <ThemeProvider>
 
-            className:'glass-pannel'
-          }}/>
-        <Routes>
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          
-          {/* Rotas Protegidas com Layout (Sidebar) */}
-          <Route element={
-            <ProtectedRoute>
-              <DefaultLayout />
-            </ProtectedRoute>
-          }>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
+          <Toaster position="top-right" richColors theme="dark" 
+            toastOptions={{
+              style:{
+                background:'rgba(15, 23, 42, 0.9)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(10px)',
+                color: 'white'
+              },
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
+              className:'glass-pannel'
+            }}/>
+          <Routes>
+
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            {/* Rotas Protegidas com Layout (Sidebar) */}
+            <Route element={
+              <ProtectedRoute>
+                <DefaultLayout />
+              </ProtectedRoute>
+            }>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </ThemeProvider>
       </AuthProvider>
     </BrowserRouter>
   );
