@@ -30,8 +30,6 @@ export function StudyHeatmap() {
         
         if (sessions && Array.isArray(sessions)) {
           sessions.forEach((session: any) => {
-            // ✅ CORREÇÃO AQUI: Acessando a propriedade dentro de 'props'
-            // Verificamos se existe session.props ou se está na raiz (fallback)
             const dataObj = session.props ? session.props : session;
             const dateStr = dataObj.date || dataObj.createdAt;
             

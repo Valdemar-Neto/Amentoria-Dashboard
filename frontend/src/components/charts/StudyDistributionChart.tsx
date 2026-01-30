@@ -22,7 +22,7 @@ export function StudyDistributionChart({ data }: StudyDistributionChartProps) {
     title: { text: undefined },
     plotOptions: {
       pie: {
-        innerSize: '60%', // Transforma Pizza em Rosca (Donut)
+        innerSize: '60%', 
         borderWidth: 0,
         allowPointSelect: true,
         cursor: 'pointer',

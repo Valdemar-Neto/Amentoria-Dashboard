@@ -24,17 +24,12 @@ export function AddSessionModal({ isOpen, onClose, onSuccess }: AddSessionModalP
     setLoading(true);
 
     try {
-      // 1. Envia para o banco de dados
       await api.post('/dashboard/sessions', formData);
       
-      // 2. DISPARA A ATUALIZAÇÃO (onSuccess chama o fetchAllStats)
-      // É vital que isso aconteça ANTES do onClose para garantir a ordem de execução
       await onSuccess(); 
       
-      // 3. Fecha o modal apenas após o sucesso
       onClose();
       
-      // Opcional: Resetar o form para o próximo uso
       setFormData({ ...formData, minutes: 60, date: new Date().toISOString().split('T')[0] });
       
     } catch (error) {
@@ -54,7 +49,7 @@ export function AddSessionModal({ isOpen, onClose, onSuccess }: AddSessionModalP
         </button>
 
         <h2 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-2">
-          Registrar Estudo 📚
+          Registrar Estudo 
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -71,6 +66,7 @@ export function AddSessionModal({ isOpen, onClose, onSuccess }: AddSessionModalP
               <option>Biologia</option>
               <option>História</option>
               <option>Português</option>
+              <option>Geografia</option>
             </select>
           </div>
 

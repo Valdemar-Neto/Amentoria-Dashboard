@@ -12,7 +12,6 @@ export function SubjectRadar({ data }: SubjectRadarProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  // ✅ CORREÇÃO: Inicializa o módulo APENAS quando o componente montar
   useEffect(() => {
     try {
       // Tenta inicializar de forma segura
