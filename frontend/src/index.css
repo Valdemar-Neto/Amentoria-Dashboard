@@ -1,8 +1,112 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body {
-  @apply bg-background text-text-primary antialiased;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+/* 1. CAMADA BASE */
+@layer base {
+  :root {
+    /* --- MODO ESCURO (Padrão) --- */
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    
+    --tx-primary: #f8fafc;
+    --tx-secondary: #94a3b8;
+    
+    
+    --border-subtle: rgba(255, 255, 255, 0.08); /* Borda sutil transparente */
+    --bg-hover: rgba(255, 255, 255, 0.05);      /* Hover sutil transparente */
+    
+     --color-brand-10: #ffffff; 
+    
+    /* Configuração do Glassmorphism Dark */
+    --glass-bg: rgba(15, 23, 42, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --shadow-glass: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* --- MODO CLARO --- */
+  :root.light {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    
+    --tx-primary: #0f172a;
+    --tx-secondary: #475569; 
+
+    
+    --border-subtle: #e2e8f0; /* Cinza sólido visível no branco */
+    --bg-hover: #f1f5f9;      /* Cinza muito claro para hover */
+
+    
+    --color-brand-10: #7c3aed;
+    
+    /* Configuração do Glassmorphism Light */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    --shadow-glass: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@theme {
+  /* --- CORES DA MARCA (Fixas) --- */
+  --color-brand-50: #f3e8ff;
+  --color-brand-100: #e9d5ff;
+  --color-brand-200: #d8b4fe;
+  --color-brand-300: #c084fc;
+  --color-brand-400: #a855f7;
+  --color-brand-500: #8b25ca;
+  --color-brand-600: #7c3aed;
+  --color-brand-700: #6d28d9;
+  --color-brand-800: #5b21b6;
+  --color-brand-900: #4c1d95;
+
+  /* Sua cor customizada */
+  --color-brand-10: var(--color-brand-10);
+
+  --color-accent: #06b6d4;
+  --color-accent-light: #67e8f9;
+  --color-accent-dark: #155e75;
+
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+
+  /* --- CORES DINÂMICAS (Mapeadas) --- */
+  --color-background: var(--bg-main);
+  --color-surface: var(--bg-card);
+  
+  --color-text-primary: var(--tx-primary);
+  --color-text-secondary: var(--tx-secondary);
+  --color-text-inverse: #0f172a; 
+
+  a Sidebar */
+  --color-border-subtle: var(--border-subtle);
+  --color-bg-hover: var(--bg-hover);
+
+  /* Sombras */
+  --shadow-glow: 0 0 20px -5px rgba(124, 58, 237, 0.5);
+  --shadow-neon: 0 0 15px -3px rgba(6, 182, 212, 0.6);
+}
+
+/* --- UTILITÁRIOS --- */
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+  transition: all 0.3s ease;
+}
+
+.glass-dark {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }

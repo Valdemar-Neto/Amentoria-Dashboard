@@ -1,6 +1,5 @@
 // Criando o contexto para geenciar se o usuario está logado e passar para todas as outras rotas
-import React, { createContext, useContext, useState, useEffect, type ReactNode} from "react";
-import { api } from "../services/api";
+import { createContext, useContext, useState, useEffect, type ReactNode} from "react";
 
 interface User{
     id: string;
@@ -33,5 +32,21 @@ export function AuthProvider({children}: {children: ReactNode}){
         setLoading(false);
     },[]);
 
-    
+    function signIn(token: string, user: User){
+        localStorage.setItem('@Amentoria:token', token);
+        localStorage.setItem('@Amentoria:user', JSON.stringify(user));
+        setUser(user)
+    }
+
+    function signOut(){
+        localStorage.clear();
+        setUser(null);
+    }
+
+    return(
+        <AuthContext.Provider value ={{user, signIn, signOut, isAuthenticated:!!user, loading}}>{children}</AuthContext.Provider>
+    )
+
 }
+
+export const useAuth = () => useContext(AuthContext)
