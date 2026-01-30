@@ -22,8 +22,9 @@ export function Login() {
 
     try {
       const response = await api.post('/auth/login', { email, password });
+      const userName = response.data.user.name.split(' ')[0];
+      toast.success(`Bem-vindo de volta, ${userName}!`, {description: 'Preparado para mais uma sessão de estudos? Vamos lá!', duration: 3000});
       signIn(response.data.accessToken, response.data.user);
-      toast.success('Bem-vindo de volta!');
       navigate('/dashboard');
     } catch (err) {
       toast.error('E-mail ou senha incorretos.')
