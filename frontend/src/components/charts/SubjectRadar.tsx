@@ -8,6 +8,7 @@ interface SubjectRadarProps {
   data?: any[];
 }
 
+
 export function SubjectRadar({ data }: SubjectRadarProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -34,13 +35,13 @@ export function SubjectRadar({ data }: SubjectRadarProps) {
   const options: Highcharts.Options = {
     chart: { polar: true, type: 'line', backgroundColor: 'transparent', height: 300, style: { fontFamily: 'Inter' } },
     title: { text: undefined },
-    pane: { size: '80%' },
+    pane: { size: '70%' },
     xAxis: {
       categories: categories,
       tickmarkPlacement: 'on',
       lineWidth: 0,
       gridLineColor: gridColor,
-      labels: { style: { color: textColor, fontWeight: 'bold' } }
+      labels: { style: { color: textColor, fontWeight: 'bold' , whiteSpace: 'nowrap'}, overflow: 'allow', padding: 0}
     },
     yAxis: {
       gridLineInterpolation: 'polygon',
