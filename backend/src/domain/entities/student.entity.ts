@@ -14,7 +14,7 @@ export class Student extends Entity<StudentProps>{
 
     //Create a new student with validation and date now
 
-    static create(props: Omit<StudentProps, 'createdAt'>,  id?: string){
+    static create(props: Omit<StudentProps, 'createdAt'> & {createdAt?: Date},  id?: string){
 
         //Name's Validation
         if(!props.name || props.name.trim().length < 3){
@@ -34,7 +34,7 @@ export class Student extends Entity<StudentProps>{
             throw new Error("A senha deve ter pelo menos 6 caracteres.");
         }
 
-        const student = new Student({...props, createdAt: new Date(),}, id);
+        const student = new Student({...props, createdAt: props.createdAt ?? new Date(),}, id);
 
         return student;
     }
@@ -55,9 +55,4 @@ export class Student extends Entity<StudentProps>{
 
         this.props.name = newName;
     }
-
-    // criar set para refazer senha e tudo mais
-
-
-    //A fazerrr
 }
