@@ -1,4 +1,5 @@
 import { X, Lightbulb, Target, AlertTriangle } from 'lucide-react';
+import { useMe } from '../../hooks/useGetMe';
 
 interface ProfessorDrawerProps {
   isOpen: boolean;
@@ -8,6 +9,9 @@ interface ProfessorDrawerProps {
 
 export function ProfessorDrawer({ isOpen, onClose, data }: ProfessorDrawerProps) {
   if (!isOpen) return null;
+
+  const {profile, fetchProfile} = useMe();
+
 
   // Lógica de Diagnóstico: Encontrar a matéria com a menor nota média atual
   const subjectsEvolution = data?.charts?.subjectScoresEvolution || [];
@@ -41,7 +45,7 @@ export function ProfessorDrawer({ isOpen, onClose, data }: ProfessorDrawerProps)
             <h4 className="text-xs font-bold text-text-secondary uppercase mb-3">Análise de Foco</h4>
             <div className="p-4 rounded-xl bg-background border border-border-subtle">
               <p className="text-sm text-text-primary italic leading-relaxed">
-                "João, notei que você dedicou <b>{data?.cards?.totalHoursStudied}h</b> aos estudos. 
+                "{profile?.name}, notei que você dedicou <b>{data?.cards?.totalHoursStudied}h</b> aos estudos. 
                 Sua matéria favorita é <b>{data?.cards?.mostPopularSubject}</b>. Que tal equilibrar um pouco com as outras?"
               </p>
             </div>
