@@ -1,66 +1,124 @@
 import { useDashboardData } from '../hooks/useDashboardData';
-import { RecommendationCard } from '../components/dashboard/RecommendationCard';
-import { Loader2, GraduationCap } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { BookOpen, Video, FileText, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+
+// 1. Definindo as Interfaces para o TypeScript
+interface Material {
+  title: string;
+  type: string;
+  icon: any;
+}
+
+interface Recommendation {
+  subject: string;
+  status: 'urgent' | 'good';
+  score: number;
+  materials: Material[];
+}
 
 export function Materiais() {
-  const { data, loading } = useDashboardData();
+  const { subjects, data, loading } = useDashboardData();
+  const [selectedSubject, setSelectedSubject] = useState('Todas');
 
-  if (loading) return <div className="h-full flex items-center justify-center"><Loader2 className="animate-spin text-accent" size={40} /></div>;
+  const recommendations = useMemo(() => {
+    const scores = data?.charts?.subjectScoresEvolution || [];
+    
+    const baseRecommendations: Recommendation[] = scores.map((s: any) => {
+      const lastScore = s.data[s.data.length - 1]?.score || 0;
+      const status = lastScore < 700 ? 'urgent' : 'good';
 
-  // Lógica para encontrar matérias com média abaixo de 600 no subjectScoresEvolution
-  const subjectsAtRisk = data?.charts?.subjectScoresEvolution?.filter((item: any) => {
-    const lastScore = item.data[item.data.length - 1]?.score;
-    return lastScore < 700; // Define o limiar de "atenção"
-  }) || [];
+      return {
+        subject: s.subject,
+        status,
+        score: lastScore,
+        materials: [
+          { title: `Teoria Completa: ${s.subject}`, type: 'PDF', icon: FileText },
+          { title: `Resolução de Exercícios Nível Difícil`, type: 'Video', icon: Video },
+          { title: `Flashcards de Revisão Ativa`, type: 'Prática', icon: BookOpen },
+        ]
+      };
+    });
+
+    if (selectedSubject === 'Todas') return baseRecommendations;
+    return baseRecommendations.filter(r => r.subject === selectedSubject);
+  }, [data, selectedSubject]);
+
+  // 2. Tratando o aviso de 'loading' (agora ele é lido aqui)
+  if (loading) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Loader2 className="animate-spin text-accent" size={40} />
+      </div>
+    );
+  }
 
   return (
     <div className="h-full flex flex-col space-y-6 overflow-hidden">
-      <header className="flex justify-between items-end">
-        <div>
-          <h1 className="text-3xl font-bold">Central de Materiais</h1>
-          <p className="text-text-secondary">Direcionamento baseado no seu desempenho real.</p>
-        </div>
-        <div className="hidden md:block bg-brand-600/10 px-4 py-2 rounded-xl border border-brand-600/20">
-          <span className="text-sm font-medium text-brand-600">Foco do Dia: {data?.cards?.mostPopularSubject}</span>
-        </div>
+      <header className="flex-none  mt-8">
+        <h1 className="text-3xl font-bold text-text-primary">Materiais de Estudo</h1>
+        <p className="text-text-secondary mt-1">Sugestões baseadas no seu desempenho real.</p>
       </header>
 
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-0">
-        {/* Lado Esquerdo: Sugestões Críticas */}
-        <div className="flex flex-col space-y-4 overflow-y-auto pr-2 custom-scrollbar">
-          <h3 className="text-lg font-bold flex items-center gap-2">
-            <GraduationCap className="text-accent" /> Prioridades de Estudo
-          </h3>
-          
-          {subjectsAtRisk.length > 0 ? (
-            subjectsAtRisk.map((s: any) => (
-              <RecommendationCard 
-                key={s.subject}
-                subject={s.subject}
-                reason={`Sua última média foi ${s.data[s.data.length - 1].score}. Está abaixo da meta.`}
-                action="Ver Videoaula de Reforço"
-              />
-            ))
-          ) : (
-            <div className="p-8 border-2 border-dashed border-border-subtle rounded-2xl text-center">
-              <p className="text-text-secondary">Parabéns! Suas notas estão acima da média em todas as frentes. 🎉</p>
-            </div>
-          )}
-        </div>
+      <div className="flex gap-2 overflow-x-auto custom-scrollbar flex-none">
+        <button 
+          onClick={() => setSelectedSubject('Todas')}
+          className={`px-5 py-1 rounded-full border transition-all whitespace-nowrap font-medium ${selectedSubject === 'Todas' ? 'bg-accent text-white border-accent' : 'bg-surface border-border-subtle text-text-secondary hover:border-accent/50'}`}
+        >
+          Todas
+        </button>
+        {subjects.map((sub: string) => (
+          <button 
+            key={sub}
+            onClick={() => setSelectedSubject(sub)}
+            className={`px-5 py-1 rounded-full border transition-all whitespace-nowrap font-medium ${selectedSubject === sub ? 'bg-accent text-white border-accent' : 'bg-surface border-border-subtle text-text-secondary hover:border-accent/50'}`}
+          >
+            {sub}
+          </button>
+        ))}
+      </div>
 
-        {/* Lado Direito: Biblioteca Geral (Placeholder) */}
-        <div className="bg-surface border border-border-subtle rounded-3xl p-6">
-          <h3 className="font-bold mb-4">Acesso Rápido</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="h-32 bg-background rounded-2xl border border-border-subtle flex flex-col items-center justify-center hover:border-accent transition-all cursor-pointer">
-              <span className="text-2xl mb-2">📚</span>
-              <span className="text-sm font-medium">E-books</span>
+      <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 min-h-0">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 pb-1">
+          {/* ✅ Tipagem adicionada no parâmetro 'rec' */}
+          {recommendations.map((rec: Recommendation) => (
+            <div key={rec.subject} className="bg-surface border border-border-subtle rounded-3xl p-3 shadow-sm flex flex-col">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="text-xl font-bold text-text-primary">{rec.subject}</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    {rec.status === 'urgent' ? (
+                      <span className="flex items-center gap-1 text-xs font-bold text-red-500 bg-red-500/10 px-2 py-1 rounded-md">
+                        <AlertCircle size={12} /> REFORÇO NECESSÁRIO
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1 text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-md">
+                        <CheckCircle2 size={12} /> BOM DESEMPENHO
+                      </span>
+                    )}
+                    <span className="text-xs text-text-secondary font-medium">Média: {rec.score} pts</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3 space-x-0">
+                {/* ✅ Tipagem adicionada nos parâmetros 'item' e 'idx' */}
+                {rec.materials.map((item: Material, idx: number) => (
+                  <div key={idx} className="flex items-center justify-between p-5 bg-background/50 rounded-2xl border border-border-subtle hover:border-accent/40 transition-all group cursor-pointer">
+                    <div className="flex items-center gap-5">
+                      <div className=" bg-accent/10 text-accent rounded-lg group-hover:bg-accent group-hover:text-white transition-all gap-10">
+                        <item.icon size={18} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-text-primary">{item.title}</p>
+                        <p className="text-[10px] text-text-secondary uppercase tracking-widest">{item.type}</p>
+                      </div>
+                    </div>
+                    <button className="text-xs font-bold ml-2 text-accent group-hover:underline">ACESSAR</button>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="h-32 bg-background rounded-2xl border border-border-subtle flex flex-col items-center justify-center hover:border-accent transition-all cursor-pointer">
-              <span className="text-2xl mb-2">🎥</span>
-              <span className="text-sm font-medium">Videoaulas</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
