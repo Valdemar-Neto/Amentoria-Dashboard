@@ -10,6 +10,7 @@ import { Toaster } from 'sonner';
 import { Simulados } from './pages/Simulados';
 import { Cronograma } from './pages/Cronogra';
 import { Materiais } from './pages/Materiais';
+import { Configuracoes } from './pages/Config';
 
 export function App() {
   return (
@@ -42,6 +43,7 @@ export function App() {
               <Route path="/simulados" element={<Simulados/>} />
               <Route path="/cronograma" element={<Cronograma/>} />
               <Route path='/materiais' element={<Materiais/>} />
+              <Route path='/configuracoes' element={<Configuracoes/>} />
             </Route>
 
             {/* Fallback */}
