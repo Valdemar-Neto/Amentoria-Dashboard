@@ -209,7 +209,7 @@ import { AddGradeModal } from '../components/modal/AddGradeModal'; // [NOVO IMPO
 import { ProfessorDrawer } from '../components/dashboard/ProfessorDrawer';
 
 // Ícones (Adicionei GraduationCap)
-import { Target, Zap, Trophy, Activity, Loader2, Plus, HelpCircle, GraduationCap } from 'lucide-react';
+import { Target, Zap, Trophy, Activity, Loader2, Plus, HelpCircle, NotebookPen } from 'lucide-react';
 
 export function Dashboard() {
   const { user } = useAuth();
@@ -287,7 +287,7 @@ export function Dashboard() {
             onClick={() => setIsGradeModalOpen(true)}
             className="flex items-center gap-2 px-5 py-3 bg-surface border border-border-subtle hover:border-accent text-text-primary hover:text-accent rounded-full font-bold shadow-sm transition-all active:scale-95"
           >
-            <GraduationCap size={20} />
+            <NotebookPen size={20} />
             <span className="hidden sm:inline">Lançar Nota</span>
           </button>
 
