@@ -5,5 +5,5 @@ export interface IStudentsRepository {
   findByEmail(email: string): Promise<Student | null>;
   findById(id: string): Promise<Student | null>;
   count(): Promise<number>;
-  updatePassword(id: string, passwordHash:string): Promise<void>;
+  updatePassword(id: string, passwordHash:string): Promise<void>; 
 }

@@ -20,9 +20,10 @@ export function StudyDistributionChart({ data }: StudyDistributionChartProps) {
   const options: Highcharts.Options = {
     chart: { type: 'pie', backgroundColor: 'transparent', height: 300, style: { fontFamily: 'Inter' } },
     title: { text: undefined },
+    pane: { size: '100%' },
     plotOptions: {
       pie: {
-        innerSize: '60%', // Transforma Pizza em Rosca (Donut)
+        innerSize: '40%', 
         borderWidth: 0,
         allowPointSelect: true,
         cursor: 'pointer',
