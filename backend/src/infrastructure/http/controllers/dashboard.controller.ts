@@ -73,7 +73,7 @@ export class DashboardController {
   }
 
   @Post('scores')
-  @ApiOperation({ summary: 'Registrar a nota de um simulado' })
+  @ApiOperation({ summary: 'Registrar a nota de uma matéria' })
   async createScore(@Req() request: any, @Body() body: CreateScoreDto) {
     await this.registerScore.execute({
       ...body,
@@ -105,7 +105,7 @@ export class DashboardController {
   }
 
   @Put('scores/:id')
-  @ApiOperation({summary:'Atualizar um registro de nota de simulado'})
+  @ApiOperation({summary:'Atualizar um registro de nota de uma matéria'})
   @ApiParam({name:'id', description:'ID da nota a ser editada'})
   async updateScore(@Req() request:any,@Param('id') id: string, @Body() body: UpdateScoreDto){
     await this.updateSimulationScore.execute({

@@ -16,7 +16,7 @@ import { DeleteStudySessionUseCase } from "../../application/use-cases/delete-st
 import { ChangePasswordUseCase } from "src/application/use-cases/change-password.use-case";
 import { UpdateSimulationScoreUseCase } from "src/application/use-cases/update-simulation-score.use-case";
 @Module({
-    imports: [DatabaseModule, JwtModule.register({global: true, secret: 'secret-key-123', signOptions:{ expiresIn: '1d'}})],
+    imports: [DatabaseModule, JwtModule.register({global: true, secret: 'SECRET_KEY', signOptions:{ expiresIn: '7d'}})],
     controllers:[AuthController,DashboardController],
     providers:[
 

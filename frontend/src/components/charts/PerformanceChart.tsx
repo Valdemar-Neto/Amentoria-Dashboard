@@ -35,7 +35,6 @@ export function PerformanceChart({ data }: PerformanceChartProps) {
         categories, 
         labels: { style: { color: textColor } },
         gridLineWidth: 0,
-        // ✅ CORREÇÃO: O crosshair funciona melhor quando definido no Eixo X
         crosshair: {
             width: 1,
             color: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)',
@@ -50,7 +49,6 @@ export function PerformanceChart({ data }: PerformanceChartProps) {
     colors: ['#06b6d4', '#7c3aed', '#22c55e', '#f59e0b', '#ef4444'],
     tooltip: { 
       shared: true 
-      // Removido 'crosshair' daqui para evitar o erro de tipo
     },
     plotOptions: {
       areaspline: {
