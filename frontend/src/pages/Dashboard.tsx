@@ -1,27 +1,31 @@
+
 // import { useEffect, useState } from 'react';
 // import { useAuth } from '../contexts/AuthContext';
 // import { api } from '../services/api';
 
 // // Gráficos Obrigatórios
-// import { PerformanceChart } from '../components/charts/PerformanceChart'; // ÁREA (#4)
-// import { StudyDistributionChart } from '../components/charts/StudyDistributionChart'; // PIZZA (#3)
+// import { PerformanceChart } from '../components/charts/PerformanceChart';
+// import { StudyDistributionChart } from '../components/charts/StudyDistributionChart';
 
 // // Gráficos Extras e UI
-
 // import { DashboardFilters } from '../components/dashboard/DashboardFilters';
 // import { AddSessionModal } from '../components/modal/AddSessionModal';
-// import { ProfessorDrawer } from '../components/dashboard/ProfessorDrawer'; // <--- NOVO
+// import { ProfessorDrawer } from '../components/dashboard/ProfessorDrawer';
 
 // // Ícones
-// import { Target, Zap, Trophy, Activity, Loader2, Plus, HelpCircle } from 'lucide-react'; // <--- HelpCircle Adicionado
+// import { Target, Zap, Trophy, Activity, Loader2, Plus, HelpCircle } from 'lucide-react';
 
 // export function Dashboard() {
 //   const { user } = useAuth();
 //   const [dashboardData, setDashboardData] = useState<any>(null);
 //   const [isLoading, setIsLoading] = useState(true);
-//   const [filters, setFilters] = useState({ startDate: '', endDate: '', searchQuery: '' });
+  
+//   // Estado inicial dos filtros
+//   const initialFilters = { startDate: '', endDate: '', searchQuery: '' };
+//   const [filters, setFilters] = useState(initialFilters);
+  
 //   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [isDrawerOpen, setIsDrawerOpen] = useState(false); // <--- Estado do Drawer
+//   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
 //   async function fetchAllStats() {
 //     setIsLoading(true);
@@ -40,6 +44,23 @@
 //     }
 //   }
 
+//   // --- [NOVO] Função para limpar filtros ---
+//   async function handleClearFilters() {
+//     // 1. Reseta os inputs visuais
+//     setFilters(initialFilters);
+    
+//     // 2. Força o carregamento dos dados SEM filtros imediatamente
+//     setIsLoading(true);
+//     try {
+//         const response = await api.get('/dashboard'); // Chama sem query params
+//         setDashboardData(response.data);
+//     } catch (error) {
+//         console.error("Erro ao limpar filtros:", error);
+//     } finally {
+//         setIsLoading(false);
+//     }
+//   }
+
 //   useEffect(() => {
 //     fetchAllStats();
 //   }, []);
@@ -49,7 +70,7 @@
 
 //   const hasLowPerformance = dashboardData?.charts?.subjectScoresEvolution?.some((subject: any) => {
 //     const lastScore = subject.data[subject.data.length - 1]?.score;
-//     return lastScore < 700; // Define o limiar de alerta
+//     return lastScore < 700;
 //   });
 
 //   return (
@@ -59,7 +80,7 @@
 //       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-8">
 //         <div>
 //           <h1 className="text-3xl font-bold text-text-primary tracking-tight">
-//             Bem-vindo de volta, Amer <span className="text-accent">{user?.name?.split(' ')[0]}</span>
+//             Bem-vindo de volta, <span className="text-accent">{user?.name?.split(' ')[0]}</span>
 //           </h1>
 //           <p className="text-text-secondary mt-1">Confira os indicadores obrigatórios do seu desempenho.</p>
 //         </div>
@@ -73,11 +94,12 @@
 //         </button>
 //       </div>
 
-//       {/* 2. BARRA DE FILTROS */}
+//       {/* 2. BARRA DE FILTROS [ATUALIZADA] */}
 //       <DashboardFilters 
 //         filters={filters} 
 //         setFilters={setFilters} 
 //         onSearch={fetchAllStats} 
+//         onClear={handleClearFilters} // <--- Passamos a nova função aqui
 //       />
 
 //       {/* 3. CARDS DE INDICADORES (KPIs) */}
@@ -97,7 +119,6 @@
 //             <h3 className="text-lg font-bold text-text-primary mb-6">Tendências de Estudo (Disciplinas)</h3>
 //             {isLoading ? <LoadingSpinner /> : <PerformanceChart data={charts.subjectScoresEvolution} />}
 //           </div>
-
 //         </div>
 
 //         {/* COLUNA DIREITA */}
@@ -116,18 +137,17 @@
 //       {/* BOTÃO FLUTUANTE DO DRAWER */}
 //       <button 
 //         onClick={() => setIsDrawerOpen(true)}
-//         className={`fixed bottom-8 right-8 p-4 bg-brand-600 hover:bg-brand-700 text-white rounded-full shadow-2xl shadow-brand-600/30 transition-all hover:scale-110 
-//           flex items-center gap-2 z-40 group ${hasLowPerformance ? 'bg-red-600 hover:bg-red-700 animate-pulse ':'bg-brand-600 hover:bg-brand-700 '} text-white`}
+//         className={`fixed bottom-8 right-8 p-4 rounded-full shadow-2xl transition-all hover:scale-110 flex items-center gap-2 z-40 group ${hasLowPerformance ? 'bg-red-600 hover:bg-red-700 animate-pulse text-white' : 'bg-brand-600 hover:bg-brand-700 text-white'}`}
 //       >
 //         <HelpCircle size={24} /> 
-//           {hasLowPerformance && (
-//             <span className="absolute -top-1 -right-1 flex h-4 w-4">
-//               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-//               <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
-//             </span>
-//           )}
+//         {hasLowPerformance && (
+//           <span className="absolute -top-1 -right-1 flex h-4 w-4">
+//             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+//             <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+//           </span>
+//         )}
 //         <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 font-bold whitespace-nowrap">
-//                   {hasLowPerformance ? 'Alerta do Tutor' : 'Dica do Professor'}
+//           {hasLowPerformance ? 'Alerta do Tutor' : 'Dica do Professor'}
 //         </span>
 //       </button>
 
@@ -148,7 +168,7 @@
 //   );
 // }
 
-// // Helpers
+// // ... Helpers (LoadingSpinner e StatCard) mantêm-se iguais
 // function LoadingSpinner() {
 //   return <div className="h-62.5 flex items-center justify-center"><Loader2 className="animate-spin text-accent" /></div>;
 // }
@@ -182,13 +202,14 @@ import { api } from '../services/api';
 import { PerformanceChart } from '../components/charts/PerformanceChart';
 import { StudyDistributionChart } from '../components/charts/StudyDistributionChart';
 
-// Gráficos Extras e UI
+// Gráficos Extras, UI e Modais
 import { DashboardFilters } from '../components/dashboard/DashboardFilters';
 import { AddSessionModal } from '../components/modal/AddSessionModal';
+import { AddGradeModal } from '../components/modal/AddGradeModal'; // [NOVO IMPORT]
 import { ProfessorDrawer } from '../components/dashboard/ProfessorDrawer';
 
-// Ícones
-import { Target, Zap, Trophy, Activity, Loader2, Plus, HelpCircle } from 'lucide-react';
+// Ícones (Adicionei GraduationCap)
+import { Target, Zap, Trophy, Activity, Loader2, Plus, HelpCircle, NotebookPen } from 'lucide-react';
 
 export function Dashboard() {
   const { user } = useAuth();
@@ -199,7 +220,9 @@ export function Dashboard() {
   const initialFilters = { startDate: '', endDate: '', searchQuery: '' };
   const [filters, setFilters] = useState(initialFilters);
   
+  // Estados dos Modais
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGradeModalOpen, setIsGradeModalOpen] = useState(false); // [NOVO ESTADO]
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   async function fetchAllStats() {
@@ -219,15 +242,12 @@ export function Dashboard() {
     }
   }
 
-  // --- [NOVO] Função para limpar filtros ---
+  // Função para limpar filtros
   async function handleClearFilters() {
-    // 1. Reseta os inputs visuais
     setFilters(initialFilters);
-    
-    // 2. Força o carregamento dos dados SEM filtros imediatamente
     setIsLoading(true);
     try {
-        const response = await api.get('/dashboard'); // Chama sem query params
+        const response = await api.get('/dashboard');
         setDashboardData(response.data);
     } catch (error) {
         console.error("Erro ao limpar filtros:", error);
@@ -251,7 +271,7 @@ export function Dashboard() {
   return (
     <div className="space-y-8 pb-10 animate-fade-in relative min-h-screen">
       
-      {/* 1. HEADER + BOTÃO DE AÇÃO */}
+      {/* 1. HEADER + BOTÕES DE AÇÃO */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-8">
         <div>
           <h1 className="text-3xl font-bold text-text-primary tracking-tight">
@@ -260,21 +280,34 @@ export function Dashboard() {
           <p className="text-text-secondary mt-1">Confira os indicadores obrigatórios do seu desempenho.</p>
         </div>
 
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-dark text-white rounded-full font-bold shadow-lg shadow-accent/30 transition-all hover:scale-105"
-        >
-          <Plus size={20} />
-          Registrar Estudo
-        </button>
+        {/* GRUPO DE BOTÕES [ATUALIZADO] */}
+        <div className="flex gap-3">
+          {/* Botão Lançar Nota [NOVO] */}
+          <button 
+            onClick={() => setIsGradeModalOpen(true)}
+            className="flex items-center gap-2 px-5 py-3 bg-surface border border-border-subtle hover:border-accent text-text-primary hover:text-accent rounded-full font-bold shadow-sm transition-all active:scale-95"
+          >
+            <NotebookPen size={20} />
+            <span className="hidden sm:inline">Lançar Nota</span>
+          </button>
+
+          {/* Botão Registrar Estudo (Mantido igual) */}
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-dark text-white rounded-full font-bold shadow-lg shadow-accent/30 transition-all hover:scale-105 active:scale-95"
+          >
+            <Plus size={20} />
+            Registrar Estudo
+          </button>
+        </div>
       </div>
 
-      {/* 2. BARRA DE FILTROS [ATUALIZADA] */}
+      {/* 2. BARRA DE FILTROS */}
       <DashboardFilters 
         filters={filters} 
         setFilters={setFilters} 
         onSearch={fetchAllStats} 
-        onClear={handleClearFilters} // <--- Passamos a nova função aqui
+        onClear={handleClearFilters}
       />
 
       {/* 3. CARDS DE INDICADORES (KPIs) */}
@@ -326,10 +359,17 @@ export function Dashboard() {
         </span>
       </button>
 
-      {/* MODAL E DRAWER */}
+      {/* MODAL SESSÃO */}
       <AddSessionModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
+        onSuccess={fetchAllStats} 
+      />
+
+      {/* MODAL NOTA [NOVO RENDER] */}
+      <AddGradeModal 
+        isOpen={isGradeModalOpen} 
+        onClose={() => setIsGradeModalOpen(false)} 
         onSuccess={fetchAllStats} 
       />
 
@@ -343,7 +383,7 @@ export function Dashboard() {
   );
 }
 
-// ... Helpers (LoadingSpinner e StatCard) mantêm-se iguais
+// Helpers
 function LoadingSpinner() {
   return <div className="h-62.5 flex items-center justify-center"><Loader2 className="animate-spin text-accent" /></div>;
 }
