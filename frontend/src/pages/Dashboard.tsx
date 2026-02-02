@@ -269,7 +269,7 @@ export function Dashboard() {
   });
 
   return (
-    <div className="space-y-8 pb-10 animate-fade-in relative min-h-screen">
+    <div className="space-y-10 pb-10 animate-fade-in relative min-h-screen">
       
       {/* 1. HEADER + BOTÕES DE AÇÃO */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-8">
@@ -311,7 +311,7 @@ export function Dashboard() {
       />
 
       {/* 3. CARDS DE INDICADORES (KPIs) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
         <StatCard title="Horas Totais" value={cards.totalHoursStudied ?? 0} trend="Tempo de Estudo" icon={Activity} color="brand" loading={isLoading} />
         <StatCard title="Média Geral" value={cards.averageScore ?? 0} trend="Pontuação" icon={Trophy} color="accent" loading={isLoading} />
         <StatCard title="Matéria Foco" value={cards.mostPopularSubject ?? '-'} trend="Mais Dedicada" icon={Zap} color="warning" loading={isLoading} />
@@ -396,7 +396,7 @@ function StatCard({ title, value, trend, icon: Icon, color, loading }: any) {
     success: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20",
   };
   return (
-    <div className="bg-surface border border-border-subtle rounded-2xl p-5 transition-all shadow-sm hover:shadow-md">
+    <div className="bg-surface border border-border-subtle rounded-2xl p-6 transition-all shadow-sm hover:shadow-md">
       <div className="flex justify-between">
         <div>
           <p className="text-text-secondary text-sm font-medium mb-1">{title}</p>
