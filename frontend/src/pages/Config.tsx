@@ -52,13 +52,13 @@ export function Configuracoes() {
 
   return (
     <div className="h-full flex flex-col space-y-6 animate-fade-in overflow-hidden">
-      <header className="flex-none pt-8">
+      <header className="flex-none">
         <h1 className="text-3xl font-bold text-text-primary tracking-tight">Configurações</h1>
-        <p className="text-text-secondary mt-1">Ajuste os parâmetros do seu sistema de aprendizado.</p>
+        <p className="text-text-secondary ">Ajuste os parâmetros do seu sistema de aprendizado.</p>
       </header>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 pb-8">
-        <div className="max-w-4xl space-y-6">
+        <div className="max-w-4xl space-y-5">
           
           {/* PERFIL */}
           <section className="bg-surface border border-border-subtle rounded-3xl p-6 shadow-sm">
@@ -69,7 +69,7 @@ export function Configuracoes() {
               <h3 className="text-lg font-bold text-text-primary">Perfil do Aluno</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
               <div className="space-y-1">
                 <label className="text-xs font-bold text-text-secondary uppercase ml-1">Nome Completo</label>
                 <input 
@@ -160,11 +160,11 @@ export function Configuracoes() {
           </section>
 
           {/* BOTÃO SALVAR */}
-          <div className="flex justify-end pt-4 pb-4">
+          <div className="flex justify-end">
             <button 
               onClick={handleSaveSettings}
               disabled={isSaving}
-              className="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-8 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-brand-600/20 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center gap-1 transition-all shadow-lg shadow-brand-600/20 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
               {isSaving ? "Salvando..." : "Salvar Alterações"}

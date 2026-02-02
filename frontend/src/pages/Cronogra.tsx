@@ -137,7 +137,7 @@ export function Cronograma() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setDisplayLimit(5); // Mobile
+        setDisplayLimit(4); // Mobile
       } else {
         setDisplayLimit(8); // Desktop
       }
@@ -152,7 +152,7 @@ export function Cronograma() {
 
   return (
     <div className="h-full flex flex-col space-y-8 overflow-hidden">
-      <header className="flex-none mt-8">
+      <header className="flex-none">
         <h1 className="text-3xl font-bold text-text-primary tracking-tight">
           Cronograma e Histórico
         </h1>

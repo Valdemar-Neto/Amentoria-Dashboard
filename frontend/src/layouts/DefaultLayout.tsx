@@ -27,7 +27,7 @@ export function DefaultLayout() {
       <Sidebar />
 
       {/* Área de Conteúdo - Destravando o scroll */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden">
+      <main className="flex-1 overflg:overflow-hidden overflow-x-hidden">
         {/* Adicionei 'p-4 md:p-8' para o conteúdo não colar na borda no celular */}
         <div className="max-w-7xl mx-auto w-full p-4 md:p-8">
           <Outlet />
