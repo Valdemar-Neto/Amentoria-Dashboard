@@ -26,7 +26,7 @@ export function Sidebar() {
       {/* 📱 BOTÃO HAMBÚRGUER (Apenas Mobile) */}
       <button 
         onClick={() => setIsMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-60g-surface border border-border-subtle p-2 rounded-lg text-text-primary shadow-md active:scale-95 transition-transform"
+        className="lg:hidden fixed top-4 left-4 z-60 bg-surface border border-border-subtle p-2 rounded-lg text-text-primary shadow-md active:scale-95 transition-transform"
       >
         <Menu size={24} />
       </button>
