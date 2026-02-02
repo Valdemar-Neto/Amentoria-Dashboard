@@ -53,8 +53,8 @@ export function Materiais() {
   }
 
   return (
-    <div className="h-full flex flex-col space-y-6 overflow-hidden">
-      <header className="flex-none  mt-8">
+    <div className="h-full flex flex-col space-y-3 overflow-hidden">
+      <header className="flex-none ">
         <h1 className="text-3xl font-bold text-text-primary">Materiais de Estudo</h1>
         <p className="text-text-secondary mt-1">Sugestões baseadas no seu desempenho real.</p>
       </header>
@@ -78,11 +78,11 @@ export function Materiais() {
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 min-h-0">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 pb-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
           {/* ✅ Tipagem adicionada no parâmetro 'rec' */}
           {recommendations.map((rec: Recommendation) => (
             <div key={rec.subject} className="bg-surface border border-border-subtle rounded-3xl p-3 shadow-sm flex flex-col">
-              <div className="flex justify-between items-start mb-3">
+              <div className="flex justify-between items-start mb-">
                 <div>
                   <h3 className="text-xl font-bold text-text-primary">{rec.subject}</h3>
                   <div className="flex items-center gap-2 mt-1">

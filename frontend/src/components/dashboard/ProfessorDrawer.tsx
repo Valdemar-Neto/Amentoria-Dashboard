@@ -10,7 +10,7 @@ interface ProfessorDrawerProps {
 export function ProfessorDrawer({ isOpen, onClose, data }: ProfessorDrawerProps) {
   if (!isOpen) return null;
 
-  const {profile, fetchProfile} = useMe();
+  const {profile} = useMe();
 
 
   // Lógica de Diagnóstico: Encontrar a matéria com a menor nota média atual
