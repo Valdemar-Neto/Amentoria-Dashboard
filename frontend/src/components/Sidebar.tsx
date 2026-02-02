@@ -181,8 +181,7 @@ function NavItem({ to, icon: Icon, label, isCollapsed, mobileOpen, onClick }: an
   const showText = !isCollapsed || mobileOpen;
 
   return (
-    <NavLink
-      to={to}
+    <NavLink to={to}
       onClick={onClick}
       title={isCollapsed && !mobileOpen ? label : ''}
       className={({ isActive }) =>
