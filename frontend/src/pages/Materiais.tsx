@@ -2,7 +2,6 @@ import { useDashboardData } from '../hooks/useDashboardData';
 import { useState, useMemo } from 'react';
 import { BookOpen, Video, FileText, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
-// 1. Definindo as Interfaces para o TypeScript
 interface Material {
   title: string;
   type: string;
@@ -43,7 +42,6 @@ export function Materiais() {
     return baseRecommendations.filter(r => r.subject === selectedSubject);
   }, [data, selectedSubject]);
 
-  // 2. Tratando o aviso de 'loading' (agora ele é lido aqui)
   if (loading) {
     return (
       <div className="h-full flex items-center justify-center">
@@ -79,8 +77,8 @@ export function Materiais() {
 
       <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 min-h-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
-          {/* ✅ Tipagem adicionada no parâmetro 'rec' */}
           {recommendations.map((rec: Recommendation) => (
+            
             <div key={rec.subject} className="bg-surface border border-border-subtle rounded-3xl p-3 shadow-sm flex flex-col">
               <div className="flex justify-between items-start mb-">
                 <div>
@@ -101,7 +99,6 @@ export function Materiais() {
               </div>
 
               <div className="space-y-3 space-x-0">
-                {/* ✅ Tipagem adicionada nos parâmetros 'item' e 'idx' */}
                 {rec.materials.map((item: Material, idx: number) => (
                   <div key={idx} className="flex items-center justify-between p-5 bg-background/50 rounded-2xl border border-border-subtle hover:border-accent/40 transition-all group cursor-pointer">
                     <div className="flex items-center gap-5">

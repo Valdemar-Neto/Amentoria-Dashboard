@@ -33,7 +33,7 @@ export function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             
-            {/* Rotas Protegidas com Layout (Sidebar) */}
+            {/* Rotas Protegidas com Layout */}
             <Route element={
               <ProtectedRoute>
                 <DefaultLayout />

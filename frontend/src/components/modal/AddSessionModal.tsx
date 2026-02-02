@@ -5,7 +5,7 @@ import { api } from '../../services/api';
 interface AddSessionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void; // Esta função chama o fetchAllStats do Dashboard
+  onSuccess: () => void; 
 }
 
 export function AddSessionModal({ isOpen, onClose, onSuccess }: AddSessionModalProps) {

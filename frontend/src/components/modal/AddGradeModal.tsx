@@ -34,7 +34,6 @@ export function AddGradeModal({ isOpen, onClose, onSuccess }: AddGradeModalProps
     setIsLoading(true);
 
     try {
-      // ✅ AQUI ESTÁ O SEGREDO: Rota certa e conversão para Number
       await api.post('/dashboard/scores', {
         subject,
         score: Number(score), 
@@ -58,7 +57,7 @@ export function AddGradeModal({ isOpen, onClose, onSuccess }: AddGradeModalProps
     <div className="fixed inset-0 z-999 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-surface border border-border-subtle w-full max-w-md rounded-3xl p-6 shadow-2xl animate-in zoom-in-95 relative overflow-hidden">
         
-        {/* Cabeçalho */}
+        {/* header */}
         <div className="flex justify-between items-center mb-6 relative z-10">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-accent/10 text-accent rounded-xl"><GraduationCap size={22} /></div>
@@ -67,7 +66,7 @@ export function AddGradeModal({ isOpen, onClose, onSuccess }: AddGradeModalProps
           <button onClick={onClose} className="p-2 hover:bg-background rounded-full text-text-secondary hover:text-text-primary transition-colors"><X size={20} /></button>
         </div>
 
-        {/* Formulário */}
+        {/* forms */}
         <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
           <div className="space-y-1">
             <label className="text-xs font-bold text-text-secondary uppercase ml-1">Disciplina</label>

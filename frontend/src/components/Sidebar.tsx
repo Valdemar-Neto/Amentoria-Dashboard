@@ -23,7 +23,7 @@ export function Sidebar() {
 
   return (
     <>
-      {/* 📱 BOTÃO HAMBÚRGUER (Apenas Mobile) */}
+      {/* menu tres listras no mobile */}
       <button 
         onClick={() => setIsMobileOpen(true)}
         className="lg:hidden fixed top-4 left-4 z-60 bg-surface border border-border-subtle p-2 rounded-lg text-text-primary shadow-md active:scale-95 transition-transform"
@@ -31,7 +31,7 @@ export function Sidebar() {
         <Menu size={24} />
       </button>
 
-      {/* 🌑 OVERLAY (Mobile) */}
+      {/* evita o overlay*/}
       {isMobileOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-65 lg:hidden backdrop-blur-sm transition-opacity"
@@ -39,7 +39,7 @@ export function Sidebar() {
         />
       )}
 
-      {/* 🏁 SIDEBAR PRINCIPAL */}
+      {/* sidebar no desktop*/}
       <aside 
         className={`
           fixed inset-y-0 left-0 z-70 flex flex-col h-dvh bg-surface border-r border-border-subtle 
@@ -52,7 +52,7 @@ export function Sidebar() {
         `}
       >
         
-        {/* BOTÃO TOGGLE DESKTOP */}
+        {/* botao toogle desktop*/}
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="hidden lg:flex absolute -right-3 top-10 bg-surface border border-border-subtle text-text-secondary hover:text-accent p-1.5 rounded-full shadow-lg hover:scale-110 transition-all z-50"
@@ -60,7 +60,7 @@ export function Sidebar() {
           {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
 
-        {/* BOTÃO FECHAR MOBILE */}
+        {/* botao para fechar no mobile */}
         <button 
           onClick={() => setIsMobileOpen(false)}
           className="lg:hidden absolute right-4 top-6 text-text-secondary"
@@ -68,7 +68,7 @@ export function Sidebar() {
           <X size={24} />
         </button>
 
-        {/* 1. Header com Logo */}
+        {/* header*/}
         <div className={`p-6 border-b border-border-subtle flex items-center ${isCollapsed ? 'lg:justify-center' : ''} transition-all`}>
           {isCollapsed ? (
              <h1 className="hidden lg:block text-3xl font-black text-brand-10 italic tracking-tighter animate-fade-in">
@@ -84,7 +84,7 @@ export function Sidebar() {
           </h1>
         </div>
 
-        {/* 2. Navegação Principal */}
+        {/* campos presentes */}
         <nav className="flex-1 px-3 py-8 space-y-2 overflow-y-auto overflow-x-hidden custom-scrollbar">
           {(!isCollapsed || isMobileOpen) && (
             <p className="px-4 text-xs font-bold text-text-secondary uppercase tracking-wider mb-4 animate-fade-in">
@@ -99,7 +99,7 @@ export function Sidebar() {
           <NavItem to="/configuracoes" icon={Settings} label="Configurações" isCollapsed={isCollapsed} mobileOpen={isMobileOpen} onClick={() => setIsMobileOpen(false)} />
         </nav>
 
-        {/* 3. Toggle dark/light mode */}
+        {/* botao de theme */}
         <div className="px-3 mt-auto mb-4">
           <button 
             onClick={toggleTheme} 
@@ -128,19 +128,19 @@ export function Sidebar() {
           </button>
         </div>
 
-        {/* 4. Footer do Usuário (Corrigido para Colapsado) */}
+        {/* footerbar*/}
         <div className="p-4 border-t border-border-subtle overflow-hidden shrink-0">
         <div className={`
             flex items-center rounded-xl bg-bg-hover border border-border-subtle hover:border-accent/50 transition-all group cursor-pointer
             ${isCollapsed ? 'justify-center p-2' : 'gap-3 p-3'}
         `}>
           
-          {/* Avatar */}
+          {/* logo */}
           <div className="h-10 w-10 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-lg shrink-0 shadow-lg shadow-brand-600/20">
             {user?.name?.charAt(0).toUpperCase() || <User size={20} />}
           </div>
 
-          {/* Info do Usuário (Texto) */}
+          {/* informacoes do usuaio */}
           {!isCollapsed && (
             <div className="flex-1 min-w-0 animate-fade-in">
               <p className="text-sm font-bold text-text-primary truncate">{user?.name}</p>
@@ -148,7 +148,7 @@ export function Sidebar() {
             </div>
           )}
 
-          {/* Botão Logout */}
+          {/* logout */}
           {!isCollapsed ? (
             <button 
               onClick={handleSignOut}
@@ -161,7 +161,7 @@ export function Sidebar() {
              null
           )}
         </div>
-          {/* Logout Inferior (Colapsado Desktop) */}
+          {/* Logout Inferior no mo*/}
             {isCollapsed && (
                 <button 
                 onClick={handleSignOut}

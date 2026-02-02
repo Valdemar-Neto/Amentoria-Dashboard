@@ -1,32 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { api } from '../services/api';
-
-// Gráficos Obrigatórios
 import { PerformanceChart } from '../components/charts/PerformanceChart';
 import { StudyDistributionChart } from '../components/charts/StudyDistributionChart';
-
-// Gráficos Extras, UI e Modais
 import { DashboardFilters } from '../components/dashboard/DashboardFilters';
 import { AddSessionModal } from '../components/modal/AddSessionModal';
-import { AddGradeModal } from '../components/modal/AddGradeModal'; // [NOVO IMPORT]
+import { AddGradeModal } from '../components/modal/AddGradeModal';
 import { ProfessorDrawer } from '../components/dashboard/ProfessorDrawer';
-
-// Ícones (Adicionei GraduationCap)
 import { Target, Zap, Trophy, Activity, Loader2, Plus, HelpCircle, NotebookPen } from 'lucide-react';
 
 export function Dashboard() {
   const { user } = useAuth();
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
-  // Estado inicial dos filtros
+
   const initialFilters = { startDate: '', endDate: '', searchQuery: '' };
   const [filters, setFilters] = useState(initialFilters);
-  
-  // Estados dos Modais
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isGradeModalOpen, setIsGradeModalOpen] = useState(false); // [NOVO ESTADO]
+  const [isGradeModalOpen, setIsGradeModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   async function fetchAllStats() {
@@ -46,7 +38,6 @@ export function Dashboard() {
     }
   }
 
-  // Função para limpar filtros
   async function handleClearFilters() {
     setFilters(initialFilters);
     setIsLoading(true);
@@ -84,9 +75,8 @@ export function Dashboard() {
           <p className="text-text-secondary">Confira os indicadores obrigatórios do seu desempenho.</p>
         </div>
 
-        {/* GRUPO DE BOTÕES [ATUALIZADO] */}
+        {/* botoes */}
         <div className="flex gap-3 ">
-          {/* Botão Lançar Nota [NOVO] */}
           <button 
             onClick={() => setIsGradeModalOpen(true)}
             className="flex items-center gap-2 px-5 py-3 bg-surface border border-border-subtle hover:border-accent text-text-primary hover:text-accent rounded-full font-bold shadow-sm transition-all active:scale-95"
@@ -95,7 +85,6 @@ export function Dashboard() {
             Lançar Nota
           </button>
 
-          {/* Botão Registrar Estudo (Mantido igual) */}
           <button 
             onClick={() => setIsModalOpen(true)}
             className="flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-dark text-white rounded-full font-bold shadow-lg shadow-accent/30 transition-all hover:scale-105 active:scale-95"
@@ -106,7 +95,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* 2. BARRA DE FILTROS */}
+      {/* filtros*/}
       <DashboardFilters 
         filters={filters} 
         setFilters={setFilters} 
@@ -114,7 +103,7 @@ export function Dashboard() {
         onClear={handleClearFilters}
       />
 
-      {/* 3. CARDS DE INDICADORES (KPIs) */}
+      {/* cards*/}
       <div className="grid grid-cols-2  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard title="Horas Totais" value={cards.totalHoursStudied ?? 0} trend="Tempo de Estudo" icon={Activity} color="brand" loading={isLoading} />
         <StatCard title="Média Geral" value={cards.averageScore ?? 0} trend="Pontuação" icon={Trophy} color="accent" loading={isLoading} />
@@ -122,10 +111,10 @@ export function Dashboard() {
         <StatCard title="Total Alunos" value={cards.totalStudents ?? 0} trend="Ranking Geral" icon={Target} color="success" loading={isLoading} />
       </div>
 
-      {/* 4. GRID DE GRÁFICOS OBRIGATÓRIOS */}
+      {/* graficos*/}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4">
         
-        {/* COLUNA ESQUERDA */}
+        {/* col esquerda */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-surface border border-border-subtle rounded-3xl p-6 shadow-sm">
             <h3 className="text-lg font-bold text-text-primary mb-6">Tendências de Estudo (Disciplinas)</h3>
@@ -133,7 +122,7 @@ export function Dashboard() {
           </div>
         </div>
 
-        {/* COLUNA DIREITA */}
+        {/* col direita */}
         <div className="space-y-6">
           <div className="bg-surface border border-border-subtle rounded-3xl shadow-sm">
             <div className="text-lg font-bold text-text-primary mt-6 text-center ">
@@ -146,7 +135,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* BOTÃO FLUTUANTE DO DRAWER */}
+      {/* drawer*/}
       <button 
         onClick={() => setIsDrawerOpen(true)}
         className={`fixed bottom-8 right-8 p-4 rounded-full shadow-2xl transition-all hover:scale-110 flex items-center gap-2 z-40 group ${hasLowPerformance ? 'bg-red-600 hover:bg-red-700 animate-pulse text-white' : 'bg-brand-600 hover:bg-brand-700 text-white'}`}
@@ -163,14 +152,14 @@ export function Dashboard() {
         </span>
       </button>
 
-      {/* MODAL SESSÃO */}
+      {/* modal de adicao de sessoes de estudos */}
       <AddSessionModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         onSuccess={fetchAllStats} 
       />
 
-      {/* MODAL NOTA [NOVO RENDER] */}
+      {/* modal de valores de notas*/}
       <AddGradeModal 
         isOpen={isGradeModalOpen} 
         onClose={() => setIsGradeModalOpen(false)} 
@@ -187,7 +176,6 @@ export function Dashboard() {
   );
 }
 
-// Helpers
 function LoadingSpinner() {
   return <div className="h-62.5 flex items-center justify-center"><Loader2 className="animate-spin text-accent" /></div>;
 }

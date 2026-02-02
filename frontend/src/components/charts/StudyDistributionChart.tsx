@@ -39,7 +39,7 @@ export function StudyDistributionChart({ data }: StudyDistributionChartProps) {
       verticalAlign: 'middle',
       layout: 'vertical'
     },
-    colors: ['#06b6d4', '#7c3aed', '#f59e0b', '#22c55e', '#ef4444', '#64748b'], // Cores da marca
+    colors: ['#06b6d4', '#7c3aed', '#f59e0b', '#22c55e', '#ef4444', '#64748b'],
     series: [{
       type: 'pie',
       name: 'Tempo',

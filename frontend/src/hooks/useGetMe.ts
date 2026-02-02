@@ -15,8 +15,6 @@ export function useMe(){
     }
 
 
-    
-
     useEffect(()=>{
         fetchProfile();
     }, [fetchProfile]);

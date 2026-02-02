@@ -15,7 +15,7 @@ export function SubjectRadar({ data }: SubjectRadarProps) {
 
   useEffect(() => {
     try {
-      // Tenta inicializar de forma segura
+      // Tenta inicializar o highcharts
       if (typeof HighchartsMore === 'function') {
         (HighchartsMore as any)(Highcharts);
       } else if (typeof HighchartsMore === 'object') {

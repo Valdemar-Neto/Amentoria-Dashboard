@@ -13,7 +13,7 @@ export function ProfessorDrawer({ isOpen, onClose, data }: ProfessorDrawerProps)
   const {profile} = useMe();
 
 
-  // Lógica de Diagnóstico: Encontrar a matéria com a menor nota média atual
+  // Lógica para Encontrar a matéria com a menor nota média atual
   const subjectsEvolution = data?.charts?.subjectScoresEvolution || [];
   
   const worstSubject = [...subjectsEvolution].sort((a: any, b: any) => {
@@ -40,7 +40,7 @@ export function ProfessorDrawer({ isOpen, onClose, data }: ProfessorDrawerProps)
         </div>
 
         <div className="space-y-6">
-          {/* Análise Baseada no Foco (KPI) */}
+          {/* KPIs */}
           <section>
             <h4 className="text-xs font-bold text-text-secondary uppercase mb-3">Análise de Foco</h4>
             <div className="p-4 rounded-xl bg-background border border-border-subtle">
@@ -51,7 +51,7 @@ export function ProfessorDrawer({ isOpen, onClose, data }: ProfessorDrawerProps)
             </div>
           </section>
 
-          {/* Alerta de Desempenho Baseado no Gráfico de Área */}
+          {/* Alerta de Desempenho */}
           <section>
             <h4 className="text-xs font-bold text-text-secondary uppercase mb-3">Ponto de Atenção</h4>
             <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/20 flex gap-3">
@@ -62,7 +62,7 @@ export function ProfessorDrawer({ isOpen, onClose, data }: ProfessorDrawerProps)
             </div>
           </section>
 
-          {/* Próximo Passo Dinâmico */}
+          {/* dicas de reforço */}
           <section>
             <h4 className="text-xs font-bold text-text-secondary uppercase mb-3">Próximo Passo</h4>
             <div className="flex gap-4 p-3 hover:bg-bg-hover rounded-xl transition-colors cursor-pointer group border border-transparent hover:border-accent/30">

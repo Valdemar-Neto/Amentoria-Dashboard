@@ -37,7 +37,7 @@ export function SubjectRankingChart({ data }: SubjectRankingProps) {
         dataLabels: { enabled: true, format: '{y}h', style: { color: isDark ? '#fff' : '#000' } }
       }
     },
-    colors: ['#7c3aed', '#8b25ca', '#a855f7', '#c084fc', '#d8b4fe'], // Degradê de Roxos
+    colors: ['#7c3aed', '#8b25ca', '#a855f7', '#c084fc', '#d8b4fe'], // cores da mentoria
     series: [{
       type: 'bar',
       name: 'Dedicação',

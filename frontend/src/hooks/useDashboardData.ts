@@ -10,15 +10,15 @@ export function useDashboardData() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      // 1. Estatísticas do Dashboard (Evolução, Cards, Radar)
+      // para o dashboard
       const statsRes = await api.get('/dashboard');
       setData(statsRes.data);
 
-      // 2. Histórico de Sessões (Rota: sessions/history)
+      // para as sessoes
       const historyRes = await api.get('/dashboard/sessions/history');
       setHistory(historyRes.data);
 
-      // 3. Matérias Únicas (Rota: subjects)
+      // materias
       const subjectsRes = await api.get('/dashboard/subjects');
       setSubjects(subjectsRes.data);
     } catch (error) {
@@ -28,13 +28,13 @@ export function useDashboardData() {
     }
   }, []);
 
-  // Função para deletar sessão (Rota: DELETE sessions/:id)
+  // deletar sessao
   const deleteSession = async (id: string) => {
     await api.delete(`/dashboard/sessions/${id}`);
     await fetchData(); // Recarrega tudo para manter os gráficos sincronizados
   };
 
-  // Função para atualizar nota (Rota: PUT scores/:id)
+  // funcao atualizar nota
   const updateScore = async (id: string, score: number) => {
     await api.put(`/dashboard/scores/${id}`, { score });
     await fetchData();

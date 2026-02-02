@@ -8,7 +8,7 @@
 
 @layer base {
   :root {
-    /* --- MODO ESCURO (Padrão) --- */
+    /* modo escuro */
     --bg-main: #0f172a;
     --bg-card: #1e293b;
     
@@ -16,18 +16,18 @@
     --tx-secondary: #94a3b8;
     
     
-    --border-subtle: rgba(255, 255, 255, 0.08); /* Borda sutil transparente */
-    --bg-hover: rgba(255, 255, 255, 0.05);      /* Hover sutil transparente */
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --bg-hover: rgba(255, 255, 255, 0.05); 
     
      --color-brand-10: #ffffff; 
     
-    /* Configuração do Glassmorphism Dark */
+    /* glass no light */
     --glass-bg: rgba(15, 23, 42, 0.6);
     --glass-border: rgba(255, 255, 255, 0.08);
     --shadow-glass: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   }
 
-  /* --- MODO CLARO --- */
+  /* modo claro*/
   :root.light {
     --bg-main: #f8fafc;
     --bg-card: #ffffff;
@@ -36,13 +36,13 @@
     --tx-secondary: #475569; 
 
     
-    --border-subtle: #e2e8f0; /* Cinza sólido visível no branco */
-    --bg-hover: #f1f5f9;      /* Cinza muito claro para hover */
+    --border-subtle: #e2e8f0; 
+    --bg-hover: #f1f5f9; 
 
     
     --color-brand-10: #7c3aed;
     
-    /* Configuração do Glassmorphism Light */
+    /* glass no light */
     --glass-bg: rgba(255, 255, 255, 0.7);
     --glass-border: rgba(0, 0, 0, 0.05);
     --shadow-glass: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
@@ -58,7 +58,7 @@
 }
 
 @theme {
-  /* --- CORES DA MARCA (Fixas) --- */
+  /* cores bases para o projeto*/
   --color-brand-50: #f3e8ff;
   --color-brand-100: #e9d5ff;
   --color-brand-200: #d8b4fe;
@@ -70,7 +70,6 @@
   --color-brand-800: #5b21b6;
   --color-brand-900: #4c1d95;
 
-  /* Sua cor customizada */
   --color-brand-10: var(--color-brand-10);
 
   --color-accent: #06b6d4;
@@ -81,7 +80,7 @@
   --color-success: #22c55e;
   --color-warning: #f59e0b;
 
-  /* --- CORES DINÂMICAS (Mapeadas) --- */
+  /* --- cores dinamicas --- */
   --color-background: var(--bg-main);
   --color-surface: var(--bg-card);
   
@@ -97,7 +96,6 @@
   --shadow-neon: 0 0 15px -3px rgba(6, 182, 212, 0.6);
 }
 
-/* --- UTILITÁRIOS --- */
 
 .glass-panel {
   background: var(--glass-bg);

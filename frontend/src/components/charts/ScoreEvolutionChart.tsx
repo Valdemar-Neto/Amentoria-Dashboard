@@ -3,7 +3,7 @@ import HighchartsReact from 'highcharts-react-official';
 import { useTheme } from '../../contexts/ThemeContext';
 
 interface ScoreEvolutionProps {
-  data?: any[]; // O array charts.scoresEvolution
+  data?: any[];
 }
 
 export function ScoreEvolution({ data }: ScoreEvolutionProps) {

@@ -8,11 +8,9 @@ import { ChangePasswordModal } from '../components/modal/ChangePasswordModal';
 export function Configuracoes() {
   const { profile } = useMe();
   
-  // Estados para controle de interface
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // --- Lógica de Alteração de Senha (API Real) ---
   async function handleChangePassword({ oldPass, newPass }: { oldPass: string, newPass: string }) {
     try {
       await api.put('/auth/change-password', {
@@ -24,11 +22,9 @@ export function Configuracoes() {
         description: "Utilize sua nova credencial no próximo login."
       });
       
-      // A modal fecha automaticamente quando a Promise resolve
     } catch (error: any) {
       console.error("Erro ao mudar senha:", error);
       
-      // Tratamento de erro para feedback preciso ao usuário
       if (error.response?.status === 401 || error.response?.status === 403) {
         toast.error("A senha atual informada está incorreta.");
       } else {
@@ -36,14 +32,12 @@ export function Configuracoes() {
            description: "Tente novamente mais tarde."
         });
       }
-      throw error; // Lança o erro para o Modal parar o loading interno dele
+      throw error; 
     }
   }
 
-  // --- Lógica do Botão Salvar (Simulação de update de perfil por enquanto) ---
   const handleSaveSettings = () => {
     setIsSaving(true);
-    // Aqui você futuramente chamaria uma rota PUT /profile
     setTimeout(() => {
         setIsSaving(false);
         toast.success("Preferências salvas com sucesso!");
@@ -74,7 +68,7 @@ export function Configuracoes() {
                 <label className="text-xs font-bold text-text-secondary uppercase ml-1">Nome Completo</label>
                 <input 
                   type="text" 
-                  readOnly // Adicionado para evitar warning do React
+                  readOnly 
                   value={profile?.name || "Carregando..."} 
                   className="w-full bg-background/50 border border-border-subtle rounded-xl p-3 text-text-primary font-medium outline-none focus:ring-2 focus:ring-accent cursor-default opacity-80" 
                 />
@@ -90,7 +84,7 @@ export function Configuracoes() {
                 />
               </div>
 
-              {/* Data de Criação (Formatada) */}
+              {/* data de criacao*/}
               <div className="md:col-span-2 p-4 bg-accent/5 border border-accent/10 rounded-2xl flex items-center gap-4 mt-2">
                  <div className="p-2 bg-accent/10 text-accent rounded-lg">
                     <Calendar size={18} />
@@ -107,7 +101,7 @@ export function Configuracoes() {
             </div>
           </section>
 
-          {/* METAS (LÓGICA DE CONTROLE) */}
+          {/* Metas*/}
           <section className="bg-surface border border-border-subtle rounded-3xl p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-6 text-emerald-500">
               <div className="p-2 bg-emerald-500/10 rounded-lg">
@@ -133,7 +127,7 @@ export function Configuracoes() {
             </div>
           </section>
 
-          {/* SENHA E SEGURANÇA */}
+          {/* senha*/}
           <section className="bg-surface border border-border-subtle rounded-3xl p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2 bg-red-500/10 text-red-500 rounded-lg">
@@ -159,7 +153,7 @@ export function Configuracoes() {
             </div>
           </section>
 
-          {/* BOTÃO SALVAR */}
+          {/* botao salvar*/}
           <div className="flex justify-end">
             <button 
               onClick={handleSaveSettings}
@@ -174,7 +168,7 @@ export function Configuracoes() {
         </div>
       </div>
 
-      {/* MODAL DE TROCA DE SENHA */}
+      {/* modal para mudar de senha*/}
       <ChangePasswordModal 
         isOpen={isChangePasswordOpen}
         onClose={() => setIsChangePasswordOpen(false)}

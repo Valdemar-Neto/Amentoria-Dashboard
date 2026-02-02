@@ -1,3 +1,4 @@
+//contexto para gerenciar estado global do theme
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
 type Theme = 'dark' | 'light';

@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 interface ChangePasswordModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // A função que vai chamar a API vem do componente pai
   onConfirm: (data: { oldPass: string, newPass: string }) => Promise<void>;
 }
 
@@ -27,12 +26,11 @@ export function ChangePasswordModal({ isOpen, onClose, onConfirm }: ChangePasswo
     setIsSubmitting(true);
     try {
       await onConfirm({ oldPass: oldPassword, newPass: newPassword });
-      // Se der certo, limpa os campos e fecha
+      // se for true, limpa os caches
       setOldPassword('');
       setNewPassword('');
       onClose();
     } catch (error) {
-      // O erro já será tratado no pai, mas garantimos que o loading pare
       console.error(error);
     } finally {
       setIsSubmitting(false);
@@ -43,7 +41,7 @@ export function ChangePasswordModal({ isOpen, onClose, onConfirm }: ChangePasswo
     <div className="fixed inset-0 z-999 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-surface border border-border-subtle w-full max-w-md rounded-3xl p-8 shadow-2xl animate-in zoom-in-95 relative overflow-hidden">
         
-        {/* Detalhe visual de fundo */}
+        {/* forms */}
         <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent/10 blur-[50px] rounded-full pointer-events-none"></div>
 
         <div className="flex justify-between items-center mb-6 relative z-10">

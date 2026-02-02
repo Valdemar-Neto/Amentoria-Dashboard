@@ -10,7 +10,6 @@ export function Simulados() {
   const { data, loading, updateScore } = useDashboardData();
   const charts = data?.charts || {};
 
-  // Estados para gerenciar o Modal de Edição
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedScore ] = useState<{id: string, subject: string, currentScore: number} | null>(null);
 
@@ -29,7 +28,7 @@ export function Simulados() {
       {/* Grid Principal */}
       <div className="flex-1 grid grid-cols-12 grid-rows-2 gap-6 min-h-0 pb-1">
         
-        {/* COLUNA ESQUERDA: Evolução e Categorias */}
+        {/* lado esquerdo */}
         <div className="col-span-12 lg:col-span-8 row-span-2 flex flex-col space-y-6">
           <div className="flex-[1.2] bg-surface border border-border-subtle rounded-3xl p-6 shadow-sm flex flex-col">
             <h3 className="text-lg font-bold text-text-primary mb-4 flex items-center gap-2">
@@ -51,7 +50,7 @@ export function Simulados() {
           </div>
         </div>
 
-        {/* COLUNA DIREITA: Radar e Histórico com Ações */}
+        {/* lado direito */}
         <div className="col-span-12 lg:col-span-4 row-span-2 flex flex-col space-y-6">
           <div className="flex-1 bg-surface border border-border-subtle rounded-3xl p-8 shadow-sm flex flex-col items-center justify-center">
             <h3 className="text-lg font-bold text-text-primary mb-1 text-center">
@@ -91,7 +90,7 @@ export function Simulados() {
         </div>
       </div>
 
-      {/* Modal renderizado no final para garantir o Z-INDEX */}
+      {/* modal de update score*/}
       <UpdateScoreModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
