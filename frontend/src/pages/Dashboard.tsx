@@ -73,26 +73,26 @@ export function Dashboard() {
   });
 
   return (
-    <div className="space-y-10 pb-10 animate-fade-in relative min-h-screen">
+    <div className="space-y-7 animate-fade-in relative">
       
       {/* 1. HEADER + BOTÕES DE AÇÃO */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-text-primary tracking-tight">
             Bem-vindo de volta, <span className="text-accent">{user?.name?.split(' ')[0]}</span>
           </h1>
-          <p className="text-text-secondary mt-1">Confira os indicadores obrigatórios do seu desempenho.</p>
+          <p className="text-text-secondary">Confira os indicadores obrigatórios do seu desempenho.</p>
         </div>
 
         {/* GRUPO DE BOTÕES [ATUALIZADO] */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 ">
           {/* Botão Lançar Nota [NOVO] */}
           <button 
             onClick={() => setIsGradeModalOpen(true)}
             className="flex items-center gap-2 px-5 py-3 bg-surface border border-border-subtle hover:border-accent text-text-primary hover:text-accent rounded-full font-bold shadow-sm transition-all active:scale-95"
           >
             <NotebookPen size={20} />
-            <span className="hidden sm:inline">Lançar Nota</span>
+            Lançar Nota
           </button>
 
           {/* Botão Registrar Estudo (Mantido igual) */}
@@ -115,7 +115,7 @@ export function Dashboard() {
       />
 
       {/* 3. CARDS DE INDICADORES (KPIs) */}
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard title="Horas Totais" value={cards.totalHoursStudied ?? 0} trend="Tempo de Estudo" icon={Activity} color="brand" loading={isLoading} />
         <StatCard title="Média Geral" value={cards.averageScore ?? 0} trend="Pontuação" icon={Trophy} color="accent" loading={isLoading} />
         <StatCard title="Matéria Foco" value={cards.mostPopularSubject ?? '-'} trend="Mais Dedicada" icon={Zap} color="warning" loading={isLoading} />
@@ -123,7 +123,7 @@ export function Dashboard() {
       </div>
 
       {/* 4. GRID DE GRÁFICOS OBRIGATÓRIOS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4">
         
         {/* COLUNA ESQUERDA */}
         <div className="lg:col-span-2 space-y-6">
@@ -137,7 +137,7 @@ export function Dashboard() {
         <div className="space-y-6">
           <div className="bg-surface border border-border-subtle rounded-3xl shadow-sm">
             <div className="text-lg font-bold text-text-primary mt-6 text-center ">
-              <h3>Distribuição Percentual (Pizza)</h3>
+              <h3>Distribuição Percentual</h3>
             </div>
             <div className="mt-12 mb-12">
               {isLoading ? <LoadingSpinner /> : <StudyDistributionChart data={charts.studyDistribution} />}

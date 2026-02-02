@@ -42,7 +42,7 @@ export function PerformanceChart({ data }: PerformanceChartProps) {
         }
     },
     yAxis: { 
-        title: { text: 'Pontuação' },
+        title: { text: 'Pontuação'},
         gridLineColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
         labels: { style: { color: textColor } }
     },
