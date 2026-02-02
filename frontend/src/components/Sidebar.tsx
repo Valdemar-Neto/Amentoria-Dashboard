@@ -139,22 +139,8 @@ export function Sidebar() {
           <div className="h-10 w-10 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-lg shrink-0 shadow-lg shadow-brand-600/20">
             {user?.name?.charAt(0).toUpperCase() || <User size={20} />}
           </div>
-
-          {/* Info do Usuário (Texto) */}
-          {!isCollapsed && (
-            <div className="flex-1 min-w-0 animate-fade-in">
-              <p className="text-sm font-bold text-text-primary truncate">{user?.name}</p>
-              <p className="text-xs text-text-secondary truncate max-w-30">{user?.email}</p>
-            </div>
-          )}
-
-          {/* Botão Logout */}
-          {!isCollapsed ? (
-            <button 
-              onClick={handleSignOut}
-              className="text-text-secondary hover:text-red-500 transition-colors p-1"
-              title="Sair"
-            >
+          {isCollapsed && !isMobileOpen && (
+            <button onClick={handleSignOut} className="w-full mt-2 hidden lg:flex justify-center text-text-secondary hover:text-red-500 p-2">
               <LogOut size={18} />
             </button>
           ) : (
@@ -196,7 +182,7 @@ function NavItem({ to, icon: Icon, label, isCollapsed, mobileOpen, onClick }: an
       {({ isActive }) => (
         <>
           {isActive && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-accent shadow-[0_0_10px_var(--color-accent)]" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-accent" />
           )}
           <Icon size={22} className={`shrink-0 ${isActive ? 'text-accent' : 'text-text-secondary group-hover:text-text-primary'}`} />
           <span className={`font-medium whitespace-nowrap transition-all duration-300 overflow-hidden ${showText ? 'w-auto opacity-100' : 'w-0 opacity-0 lg:hidden'}`}>
