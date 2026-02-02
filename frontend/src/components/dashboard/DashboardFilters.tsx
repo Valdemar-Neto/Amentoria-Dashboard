@@ -124,7 +124,7 @@ export function DashboardFilters({ filters, setFilters, onSearch, onClear }: Das
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
           
           {/* Datas em Grid (Lado a lado no Mobile e Desktop) */}
-          <div className="grid grid-cols-2 gap-3 w-full  sm:gap-5 sm:w-56">
+          <div className="grid grid-cols-2 gap-3 w-full  sm:gap-7 sm:w-56">
             {/* Data Início */}
             <div className="relative w-full">
                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
