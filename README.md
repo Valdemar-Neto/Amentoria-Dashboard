@@ -23,25 +23,22 @@ Os dados visualizados incluem:
 
 ---
 
-## ✨ Destaques de Engenharia e UX
+## 🛡️ Engenharia de Software e Segurança
 
-### 🏗️ Arquitetura e Padrões de Projeto (Advanced)
-A construção deste software seguiu rigorosamente os princípios de engenharia moderna para garantir robustez e desacoplamento:
+### 🔐 Segurança e Controle de Acesso
+- **Criptografia de Ponta (Bcrypt):** Implementação de hashing de senhas utilizando algoritmos robustos (*salt rounds*), garantindo que credenciais sensíveis nunca sejam armazenadas ou trafegadas em texto plano, mitigando riscos de vazamento de dados.
+- **Auth Guards (Rotas Protegidas):** Sistema de proteção de rotas no *React Router Dom*. Middleware lógico que intercepta navegações para áreas privadas (Dashboard, Notas), validando a existência e expiração do token de sessão antes de renderizar o componente, redirecionando automaticamente requisições não autorizadas.
+- **Gestão de Sessão Segura:** Implementação de persistência de estado de autenticação isolada, prevenindo acesso indevido e garantindo o ciclo de vida correto do login/logout.
+
+### 🏗️ Arquitetura e Design Patterns
+A construção do software seguiu rigorosamente princípios de arquitetura limpa para garantir desacoplamento e testabilidade:
 
 - **Arquitetura Hexagonal (Ports & Adapters):** A lógica de negócio e as regras de domínio estão isoladas da camada de visualização (React) e da camada de infraestrutura (API), permitindo que o frontend seja agnóstico à fonte dos dados.
-- **DDD (Domain-Driven Design):** O código foi estruturado em torno do domínio acadêmico, com limites claros (Bounded Contexts) entre as entidades de *Sessão*, *Nota* e *Estudante*, refletindo a linguagem ubíqua do negócio.
-- **SOLID:** Aplicação estrita dos princípios, com destaque para:
-  - *Single Responsibility Principle (SRP):* Componentes e Hooks com responsabilidades únicas.
-  - *Dependency Inversion Principle (DIP):* Injeção de dependências através de Contexts e Services abstratos.
+- **SOLID & Clean Code:** Aplicação estrita de princípios como *Single Responsibility* (Componentes e Hooks atômicos) e *Dependency Inversion* (injeção de dependências via Context API), facilitando a manutenção e escalabilidade.
+- **Domain-Driven Design (DDD):** O código reflete a linguagem ubíqua do domínio acadêmico, com limites claros (*Bounded Contexts*) entre as entidades de Estudante, Sessão de Estudo e Métricas.
 - **TDD (Test-Driven Development):** Desenvolvimento guiado por testes para garantir a integridade das funcionalidades críticas antes mesmo da implementação visual.
+- **Tratamento de Erros Resiliente:** Camada de serviço HTTP (*Service Layer*) centralizada para interceptação e tratamento padronizado de exceções e respostas da API.
 
-### 📱 Responsividade de Próxima Geração
-- **Sidebar Híbrida Inteligente:** Menu lateral no Desktop que se transforma em *Drawer Overlay* no Mobile.
-- **Gráficos Fluidos:** Implementação de *Reflow* automático em gráficos Highcharts para adaptação a qualquer viewport.
-- **UI Adaptável:** Filtros e tabelas que transitam de layout em linha para colunas ou grids dependendo do dispositivo.
-### 🤖 Automação e DevOps (CI/CD)
-Para otimizar o fluxo de trabalho, foi implementada uma cultura de automação via **GitHub Actions**:
-- **Deploy Contínuo:** Integração direta com a Vercel, onde cada atualização na branch principal dispara o build de produção instantaneamente.
 
 ### 📊 Funcionalidades Chave
 - **Indicadores de Performance (KPIs):** Visualização rápida de médias, horas estudadas e metas.
