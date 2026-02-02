@@ -2,6 +2,8 @@
 
 Este repositório contém o código fonte do **Amentoria**, um dashboard interativo desenvolvido para monitoramento de desempenho acadêmico. O projeto foi construído com foco em **React**, **TypeScript** e **Visualização de Dados**, simulando um ambiente real de tutoria estudantil.
 
+<img width="1906" height="904" alt="login" src="https://github.com/user-attachments/assets/6c7d1678-70ee-4bbd-b14b-5ea8681b4798" />
+
 ---
 ## 📄 Descrição do Projeto
 
