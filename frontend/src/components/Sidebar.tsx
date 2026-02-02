@@ -42,7 +42,7 @@ export function Sidebar() {
       {/* 🏁 SIDEBAR PRINCIPAL */}
       <aside 
         className={`
-          fixed inset-y-0 left-0 z-70 flex flex-col h-screen bg-surface border-r border-border-subtle 
+          fixed inset-y-0 left-0 z-70 flex flex-col h-dvh bg-surface border-r border-border-subtle 
           transition-all duration-300 ease-in-out
           
           ${isMobileOpen ? 'translate-x-0 w-72' : '-translate-x-full w-72'} 
@@ -79,7 +79,7 @@ export function Sidebar() {
                Amentoria<span className="text-accent">.</span>
              </h1>
           )}
-          <h1 className="lg:hidden text-4xl font-black text-brand-10 italic tracking-tighter">
+          <h1 className="hidden lg:block text-4xl font-black text-brand-10 italic tracking-tighter">
             Amentoria<span className="text-accent">.</span>
           </h1>
         </div>
@@ -129,7 +129,7 @@ export function Sidebar() {
         </div>
 
         {/* 4. Footer do Usuário (Corrigido para Colapsado) */}
-        <div className="p-4 border-t border-border-subtle overflow-hidden">
+        <div className="p-4 border-t border-border-subtle overflow-hidden shrink-0">
         <div className={`
             flex items-center rounded-xl bg-bg-hover border border-border-subtle hover:border-accent/50 transition-all group cursor-pointer
             ${isCollapsed ? 'justify-center p-2' : 'gap-3 p-3'}
