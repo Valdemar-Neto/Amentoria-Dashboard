@@ -40,13 +40,12 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
     // Matéria mais popular é a que teve mais tempo de estudo
     const mostPopularSubject = sortedByTime.length > 0 ? sortedByTime[0][0] : 'N/A';
 
-    // Gráfico de Barras: Ranking de Matérias (Top 5 por dedicação)
+    // Gráfico de Barras: Ranking de Matérias 
     const subjectsRanking = sortedByTime.slice(0, 5).map(([subject, minutes]) => ({
         subject,
-        hours: Math.round(minutes / 60) // Convertendo para horas para ficar bonito no gráfico
+        hours: Math.round(minutes / 60) // Convertendo para horas 
     }));
 
-    // Gráfico de Pizza: Distribuição de Estudo (Top 4 + Outros)
     const topSubjects = sortedByTime.slice(0, 4);
     const otherSubjects = sortedByTime.slice(4);
     
@@ -63,7 +62,7 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
         });
     }
 
-    // Gráfico de Linha: Evolução das Notas
+    
     const scoresByDate = new Map<string, { total: number, count: number }>();
     scores.forEach(s => {
         const dateStr = s.date instanceof Date ? s.date.toISOString().split('T')[0] : new Date(s.date).toISOString().split('T')[0];
@@ -81,13 +80,12 @@ async execute(filters: DashboardFilters): Promise<DashboardStatsOutputs> {
     const timePerCategory = new Map<string, number>();
 
     sessions.forEach(session => {
-        // Se no seu banco o campo for 'category' (ex: 'AULA', 'EXERCICIO')
+        
         const category = session.category || 'OUTROS';
         const currentMinutes = timePerCategory.get(category) || 0;
         timePerCategory.set(category, currentMinutes + session.minutes);
     });
 
-    // 2. Transformar o Map em um Array formatado para o Highcharts
     const categoryDistribution = [...timePerCategory.entries()].map(([category, minutes]) => ({
         category,
         hours: Math.round(minutes / 60)

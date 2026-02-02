@@ -35,7 +35,6 @@ async function main() {
   console.log('👤 Alunos criados.');
 
   // 3. Criar Volume Massivo de Sessões de Estudo
-  // ✅ Adicionado tipo Prisma.StudySessionCreateManyInput[]
   const sessions: Prisma.StudySessionCreateManyInput[] = []; 
 
   for (let i = 0; i < 250; i++) {
@@ -59,7 +58,6 @@ async function main() {
   console.log(`📚 ${sessions.length} sessões de estudo criadas.`);
 
   // 4. Criar Notas de Simulado (Evolução por Matéria)
-  // ✅ Adicionado tipo Prisma.SimulationScoreCreateManyInput[]
   const scores: Prisma.SimulationScoreCreateManyInput[] = []; 
   
   subjects.forEach((subject, subjectIndex) => {

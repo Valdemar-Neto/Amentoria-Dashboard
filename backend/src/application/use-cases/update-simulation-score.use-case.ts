@@ -22,7 +22,7 @@ export class UpdateSimulationScoreUseCase {
       throw new NotFoundException('Registro de nota não encontrado.');
     }
 
-    // Trava de segurança: um aluno não pode editar a nota de outro
+    //aluno não pode alterar nota de outro alno
     if (score.studentId !== input.studentId) {
       throw new ForbiddenException('Você não tem permissão para editar este registro.');
     }

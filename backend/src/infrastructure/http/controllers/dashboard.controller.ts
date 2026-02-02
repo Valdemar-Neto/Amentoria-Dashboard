@@ -19,8 +19,8 @@ import { CreateScoreDto } from '../dtos/create-score.dto';
 import { UpdateSimulationScoreUseCase } from 'src/application/use-cases/update-simulation-score.use-case';
 import { UpdateScoreDto } from '../dtos/update-score.dto';
 
-@ApiTags('Dashboard') // Agrupa as rotas no Swagger UI
-@ApiBearerAuth()      // Ativa a autenticação JWT no Swagger
+@ApiTags('Dashboard') // documentacao de com swagger
+@ApiBearerAuth()      // Autenticacao com jwt 
 @UseGuards(AuthGuard)
 @Controller('dashboard')
 export class DashboardController {

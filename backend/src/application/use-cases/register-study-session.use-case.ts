@@ -18,7 +18,7 @@ export class RegisterStudySessionUseCase {
   ) {}
 
   async execute(input: RegisterStudySessionInput): Promise<void> {
-    // Aqui a validação da sua Entidade StudySession.create será executada!
+    
     const session = StudySession.create({
       ...input,
       date: new Date(input.date),

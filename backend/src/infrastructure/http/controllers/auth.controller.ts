@@ -11,7 +11,7 @@ import { ChangePasswordUseCase } from "src/application/use-cases/change-password
 import { ChangePasswordDto } from "../dtos/change-password.dto";
 
 
-@ApiTags('Authentication') // Mudamos para separar do Dashboard no Swagger
+@ApiTags('Authentication') // Separar do auth
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -29,7 +29,7 @@ export class AuthController {
       const output = await this.registerStudent.execute(body);
       return { message: 'Student created successfully', id: output.id };
     } catch (error: any) {
-      console.log("❌ Erro no Use Case:", error.message);
+      console.log("Erro no Use Case:", error.message);
       if (error.message === 'Este e-mail já está em uso.') {
         throw new ConflictException('Este e-mail já está cadastrado.');
       }
@@ -53,11 +53,10 @@ export class AuthController {
   }
 
   @Get('me')
-  @UseGuards(AuthGuard) // Protegemos o perfil!
-  @ApiBearerAuth()      // Mostra o cadeado no Swagger
+  @UseGuards(AuthGuard) // protecao 
+  @ApiBearerAuth()     
   @ApiOperation({ summary: 'Retorna os dados do aluno logado' })
   async getMe(@Req() request: any) {
-    // Agora não passamos mais o ID por Query, usamos o Token!
     const studentId = request.user.sub;
     return await this.getStudentProfile.execute(studentId);
   }
