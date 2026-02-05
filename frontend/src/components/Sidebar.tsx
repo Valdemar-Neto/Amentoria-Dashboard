@@ -68,21 +68,24 @@ export function Sidebar() {
           <X size={24} />
         </button>
 
-        {/* header*/}
-        <div className={`p-6 border-b border-border-subtle flex items-center ${isCollapsed ? 'lg:justify-center' : ''} transition-all`}>
-          {isCollapsed ? (
-             <h1 className="hidden lg:block text-3xl font-black text-brand-10 italic tracking-tighter animate-fade-in">
-               A<span className="text-accent">.</span>
-             </h1>
-          ) : (
-             <h1 className="text-4xl font-black text-brand-10 leading-tight italic tracking-tighter drop-shadow-lg whitespace-nowrap overflow-hidden animate-fade-in">
-               Amentoria<span className="text-accent">.</span>
-             </h1>
-          )}
-          <h1 className="hidden lg:block text-4xl font-black text-brand-10 italic tracking-tighter">
+      {/* Header com Logo */}
+      <div className={`p-6 border-b border-border-subtle flex items-center ${isCollapsed ? 'lg:justify-center' : ''} transition-all shrink-0`}>
+        
+        
+        {isCollapsed ? (
+          <h1 className="hidden lg:block text-3xl font-black text-brand-10 italic tracking-tighter animate-fade-in">
+            A<span className="text-accent">.</span>
+          </h1>
+        ) : (
+          <h1 className="hidden lg:block text-4xl font-black text-brand-10 leading-tight italic tracking-tighter drop-shadow-lg whitespace-nowrap overflow-hidden animate-fade-in">
             Amentoria<span className="text-accent">.</span>
           </h1>
-        </div>
+        )}
+        <h1 className="lg:hidden text-4xl font-black text-brand-10 italic tracking-tighter">
+          Amentoria<span className="text-accent">.</span>
+        </h1>
+
+      </div>
 
         {/* campos presentes */}
         <nav className="flex-1 px-3 py-8 space-y-2 overflow-y-auto overflow-x-hidden custom-scrollbar">
